@@ -1,0 +1,1 @@
+# function to label if countries are in the same region (a dummy variable)
