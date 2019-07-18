@@ -25,3 +25,18 @@ class_file <- read.csv("iso_class.csv", header=T) %>% text.fun()
 # Indicator class file: indicator_file contains the description of each indicator used in the tool
 indicator_file <- read.csv("indicator.csv", header=T) %>% text.fun()
 
+
+summary <- aggregate(data_file, by = list(data_file$countryname), FUN=mean, na.rm=T) %>% subset(select=c("Group.1", "gdp","gdppc")) %>% mutate(add=1)
+#rank(-summary$gdp, na.last="keep") ,"gdpc","gdppc","gdppcc"
+
+summary[,2:ncol(summary)] <- sapply(summary[,2:ncol(summary)], function(x) rank(-x, na.last="keep"))
+#summary[summary$Group.1 == "China",2:3]
+#sweep(summary[,2:3], 2, c(1,2),"-")
+
+#summary[,!names(summary)=="Group.1"]
+
+test <- sapply(summary[,2:ncol(summary)], function(x) rank(-x, na.last="keep")) %>% as.matrix()
+chn <- summary[summary$Group.1 == "China",2:ncol(summary)] %>% as.matrix()
+summary[,2:ncol(summary)] <- sweep(test,2, chn,"-")
+
+

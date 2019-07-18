@@ -28,19 +28,39 @@ country.fcs <- reactive({
 # 2 reactive dataset selected by the user
 struc_data <- reactive({
   # convert to short name
-  ind <- c(input$INDICATOR1,input$INDICATOR2,input$INDICATOR3,input$INDICATOR4,input$INDICATOR5,input$INDICATOR6) %>% sapply(indicator) %>% unique()
+  ind <- c(input$INDICATOR1,input$INDICATOR2,input$INDICATOR3,input$INDICATOR4,input$INDICATOR5,input$INDICATOR6) %>% sapply(indicator) #%>% unique()
   ind <- ind[!ind=="Select"]
-  middle <- subset(data_file, year>=input$YEAR[1] & year<=input$YEAR[2] ,select=c("iso3","year",ind)) 
-  middle <- aggregate(middle, by = list(middle$iso3), FUN=mean, na.rm=T) 
-  result <- middle[,!names(middle) %in% c("iso3","year")]
+  middle <- subset(data_file, year>=input$YEAR[1] & year<=input$YEAR[2] ,select=c("countryname","year",ind)) 
+  middle <- aggregate(middle, by = list(middle$countryname), FUN=mean, na.rm=T) 
+  result <- middle[,!names(middle) %in% c("countryname","year")]
+  names(result)[1] <- "countryname"
   result
 })
+
 
 # 2.a match indicator and its weight
 struc_match <- reactive({
   data.frame(
-    selected = c(input$INDICATOR1,input$INDICATOR2,input$INDICATOR3,input$INDICATOR4,input$INDICATOR5,input$INDICATOR6),
+    selected = c(indicator(input$INDICATOR1),indicator(input$INDICATOR2),indicator(input$INDICATOR3),indicator(input$INDICATOR4),indicator(input$INDICATOR5),indicator(input$INDICATOR6)),
     weight = c(input$W1,input$W2,input$W3,input$W4,input$W5,input$W6),
     stringsAsFactors = F
-  )
+  ) %>% subset(selected!="Select")
 })
+
+# 2.b 
+
+# 2.c create table for the ranking and determi
+struc_ranking <- reactive({
+  struc_rank <- struc_data() %>% mutate(add=1)
+  struc_rank[,2:ncol(struc_rank)] <- sapply(struc_rank[,2:ncol(struc_rank)], function(x) rank(-x, na.last="keep")) 
+  target <- struc_rank[struc_rank$countryname == input$TARGET,2:ncol(struc_rank)] %>% as.matrix()
+  struc_rank[,2:ncol(struc_rank)] <- sweep(struc_rank[,2:ncol(struc_rank)],2, target,"-") %>% sapply(abs)
+  #struc_rank <- struc_rank[,!names(struc_rank)=="add"]
+  # inser the weight vector
+  weight <- c(struc_match()[,"weight"],0)#%>% as.matrix()
+  struc_rank[,2:ncol(struc_rank)] <- sweep(struc_rank[,2:ncol(struc_rank)],2, weight,"*") 
+  struc_rank$weighted_dif <- rowSums(struc_rank[,-1])/sum(weight)
+  struc_rank$result <- rank(-struc_rank$weighted_dif, na.last = "keep")
+  struc_rank %>% arrange(desc(weighted_dif)) %>% slice(1:3)
+})
+

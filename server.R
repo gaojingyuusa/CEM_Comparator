@@ -36,5 +36,9 @@ shinyServer(function(input, output){
   output$str_matchind <- renderTable({
     struc_match()
   })
-     
+    # Structural rank output
+  output$struc_rank <- renderTable({
+    struc_ranking()
+  })
+  
 })

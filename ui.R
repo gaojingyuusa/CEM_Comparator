@@ -67,7 +67,7 @@ fluidPage(
                       # Indicator 1
                          fluidRow(
                            column(9,
-                               selectInput("INDICATOR1",NULL,choices=unique(indicator_file$Description),selected="Select")
+                               selectInput("INDICATOR1",NULL,choices=unique(indicator_file$Description),selected="GDP (constant 2010 US$)")
                                  ),
   
                            column(3, 
@@ -137,14 +137,17 @@ fluidPage(
                         column(9,
                                selectInput("INDICATOR6",NULL,choices=unique(indicator_file$Description),selected="Select")
                         ),
-                        
                         column(3, 
                                conditionalPanel(
                                  condition = "input.INDICATOR6 != 'Select'",
                                  numericInput("W6",NULL,value=1)
                                                )
                               )
-                              )
+                              ),
+                      
+                      # Structural data table
+                      tableOutput("struc_table"),
+                      tableOutput("str_matchind")
                        
                            
                            
