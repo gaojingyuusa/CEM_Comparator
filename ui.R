@@ -12,6 +12,11 @@ fluidPage(
     tags$style(HTML(
                     "
                     #sidebar  {background-color: white;}
+                    ",
+                    
+                    ".selectize-input {}
+                     #INDICATOR1+ div>. selectize-input{height:10px;font-size: 11px; line-height: 16px;}
+                    
                     "
                    )
               )
@@ -47,19 +52,100 @@ fluidPage(
     mainPanel(
       tabsetPanel(type="tabs",
                   tabPanel("Structural Comparators",
-                      # Set layout
+                           h3("Find Structural Comparators", style="color:#002244"),
+                           p("Structural comparators are defined as countries that are similar to the target country in terms of selected indicators."),
+                           h4(strong("Select up to 6 indicators and their weight")),
+                      # Title of indicator selections
+                         fluidRow(
+                           column(9,
+                                 "Indicators"
+                                 ),
+                           column(3,
+                                  "Weight"
+                                 )
+                                 ),
+                      # Indicator 1
+                         fluidRow(
+                           column(9,
+                               selectInput("INDICATOR1",NULL,choices=unique(indicator_file$Description),selected="Select")
+                                 ),
+  
+                           column(3, 
+                                conditionalPanel(
+                                  condition = "input.INDICATOR1 != 'Select'",
+                                  numericInput("W1",NULL,value=1)
+                                                )
+                                 )
+                                 ),
+                      # Indicator 2    
                       fluidRow(
-                         h2("Welcome to structural peers"),
-                         # Structural indicators
-                         column(3, style = "background-color:#4d3a7d;",
-                               "sidebar"
-                               ),
-                         # List of structural countries
-                         column(9, style = "background-color:red;",
-                                "main"
-                               )
+                        column(9,
+                               selectInput("INDICATOR2",NULL,choices=unique(indicator_file$Description),selected="Select")
+                        ),
                         
-                              )     
+                        column(3, 
+                               conditionalPanel(
+                                 condition = "input.INDICATOR2 != 'Select'",
+                                 numericInput("W2",NULL,value=1)
+                               )
+                        )
+                              ),
+                      # Indicator 3
+                      fluidRow(
+                        column(9,
+                               selectInput("INDICATOR3",NULL,choices=unique(indicator_file$Description),selected="Select")
+                        ),
+                        
+                        column(3, 
+                               conditionalPanel(
+                                 condition = "input.INDICATOR3 != 'Select'",
+                                 numericInput("W3",NULL,value=1)
+                                               )
+                              )
+                              ),
+                      
+                      # Indicator 4
+                      fluidRow(
+                        column(9,
+                               selectInput("INDICATOR4",NULL,choices=unique(indicator_file$Description),selected="Select")
+                        ),
+                        
+                        column(3, 
+                               conditionalPanel(
+                                 condition = "input.INDICATOR4 != 'Select'",
+                                 numericInput("W4",NULL,value=1)
+                                               )
+                              )
+                              ),
+                      
+                      # Indicator 5
+                      fluidRow(
+                        column(9,
+                               selectInput("INDICATOR5",NULL,choices=unique(indicator_file$Description),selected="Select")
+                               ),
+                        
+                        column(3, 
+                               conditionalPanel(
+                                 condition = "input.INDICATOR5 != 'Select'",
+                                 numericInput("W5",NULL,value=1)
+                                               )   
+                              )
+                              ),
+                      
+                      # Indicator 6
+                      fluidRow(
+                        column(9,
+                               selectInput("INDICATOR6",NULL,choices=unique(indicator_file$Description),selected="Select")
+                        ),
+                        
+                        column(3, 
+                               conditionalPanel(
+                                 condition = "input.INDICATOR6 != 'Select'",
+                                 numericInput("W6",NULL,value=1)
+                                               )
+                              )
+                              )
+                       
                            
                            
                           ),

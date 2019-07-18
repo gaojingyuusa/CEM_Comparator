@@ -27,7 +27,14 @@ shinyServer(function(input, output){
   output$country.fcs <- renderText({
     country.fcs()
   })
-  
-  
-  
+
+# Structural data table
+  output$struc_table <- renderTable({
+    struc_data()
+  })
+    # Match indicator and weight
+  output$str_matchind <- renderTable({
+    struc_match()
+  })
+     
 })
