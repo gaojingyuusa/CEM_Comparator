@@ -147,7 +147,8 @@ fluidPage(
                       
                       # Structural data table
                       tableOutput("struc_table"),
-                      tableOutput("str_matchind")
+                      tableOutput("str_matchind"),
+                      tableOutput("struc_rank")
                        
                            
                            

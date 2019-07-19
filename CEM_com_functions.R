@@ -10,4 +10,7 @@ indicator <- function(name){
   indicator_file[indicator_file$Description==name, "Name"]
 }
 
-sample <- c("gdp", "gdpc", "gdppc", "gdppcc")
+# 3 function to calculate summary data of select country
+summary <- function(data, country, start, end, indicator){
+  subset(data, year >= start & year <= end & countryname == country, select=c(indicator))[[1]] %>% mean(na.rm=T)
+}

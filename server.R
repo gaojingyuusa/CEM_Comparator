@@ -36,9 +36,33 @@ shinyServer(function(input, output){
   output$str_matchind <- renderTable({
     struc_match()
   })
-    # Structural rank output
+    # Structural rank 
   output$struc_rank <- renderTable({
     struc_ranking()
   })
+    # Structural result: full list
+  output$struc_result <- renderTable(
+    struc_result()
+  )
+    # Average for target country
+  output$ind1 <- renderText(
+    ind1()
+  )
+  output$ind2 <- renderText(
+    ind2()
+  )
+  output$ind3 <- renderText(
+    ind3()
+  )
+  output$ind4 <- renderText(
+    ind4()
+  )
+  output$ind5 <- renderText(
+    ind5()
+  )
+  output$ind6 <- renderText(
+    ind6()
+  )
+  
   
 })
