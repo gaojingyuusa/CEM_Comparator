@@ -68,7 +68,18 @@ struc_ranking <- reactive({
 
 # 2.c structural peers top 10
 struc_result <- reactive({
-  struc_ranking() %>% arrange(desc(-weighted_dif)) %>% slice(1:10)
+    full <- merge(class_file, struc_ranking(),by.x="Code", by.y="iso3")
+  if(input$RESTRICTION=="all"){
+    full <- full
+  } else if (input$RESTRICTION=="small"){
+    full <- full[full$smallstates==1,]
+  } else if (input$RESTRICTION=="region"){
+    full <- full[full$Region==country.region(),]
+  } else if (input$RESTRICTION=="fcs"){
+    full <- full[full$fcs==1,]
+  }
+  
+  full %>% arrange(desc(-weighted_dif)) %>% slice(1:10)
 })
 
 # 2.d structural indicator average for tartget country

@@ -41,11 +41,11 @@ fluidPage(
                  textOutput("country.income"),
                  textOutput("country.land"),
                  textOutput("country.small"),
-                 textOutput("country.fcs"),
-                 checkboxInput("REGION", "Regional Peers", value=FALSE),
-                 checkboxInput("LAND", "Landlocked", value=FALSE),
-                 checkboxInput("SMALL", "Small States", value=FALSE),
-                 checkboxInput("FCS", "Fragile & Conflicted States", value=FALSE)
+                 textOutput("country.fcs")
+                # checkboxInput("REGION", "Regional Peers", value=FALSE),
+                # checkboxInput("LAND", "Landlocked", value=FALSE),
+                # checkboxInput("SMALL", "Small States", value=FALSE),
+                # checkboxInput("FCS", "Fragile & Conflicted States", value=FALSE)
                 ),
     
     # Main Panel: Structural and Aspirational
@@ -57,16 +57,22 @@ fluidPage(
                            h4(strong("Select up to 6 indicators and their weight")),
                       # Title of indicator selections
                          fluidRow(
-                           column(9,
+                           column(6,
                                  "Indicators"
                                  ),
+
                            column(3,
                                   "Weight"
+                                 ),
+                           
+                           column(3,
+                                  "Average"
                                  )
+                           
                                  ),
                       # Indicator 1
                          fluidRow(
-                           column(9,
+                           column(6,
                                selectInput("INDICATOR1",NULL,choices=unique(indicator_file$Description),selected="GDP (constant 2010 US$)")
                                  ),
   
@@ -75,11 +81,19 @@ fluidPage(
                                   condition = "input.INDICATOR1 != 'Select'",
                                   numericInput("W1",NULL,value=1)
                                                 )
-                                 )
+                                 ),
+                           
+                           column(3, 
+                                  conditionalPanel(
+                                    condition = "input.INDICATOR1 != 'Select'",
+                                    h4(textOutput("ind1"), style="margin-top:5%")
+                                  )
+                                  )
+                           
                                  ),
                       # Indicator 2    
                       fluidRow(
-                        column(9,
+                        column(6,
                                selectInput("INDICATOR2",NULL,choices=unique(indicator_file$Description),selected="Select")
                         ),
                         
@@ -88,11 +102,20 @@ fluidPage(
                                  condition = "input.INDICATOR2 != 'Select'",
                                  numericInput("W2",NULL,value=1)
                                )
-                        )
+                        ),
+                        
+                        column(3, 
+                               conditionalPanel(
+                                 condition = "input.INDICATOR2 != 'Select'",
+                                 h4(textOutput("ind2"), style="margin-top:5%")
+                               )
+                               )
+                        
+                      
                               ),
                       # Indicator 3
                       fluidRow(
-                        column(9,
+                        column(6,
                                selectInput("INDICATOR3",NULL,choices=unique(indicator_file$Description),selected="Select")
                         ),
                         
@@ -101,12 +124,19 @@ fluidPage(
                                  condition = "input.INDICATOR3 != 'Select'",
                                  numericInput("W3",NULL,value=1)
                                                )
-                              )
+                              ),
+                        
+                        column(3, 
+                               conditionalPanel(
+                                 condition = "input.INDICATOR2 != 'Select'",
+                                 h4(textOutput("ind3"), style="margin-top:5%")
+                               )
+                               )
                               ),
                       
                       # Indicator 4
                       fluidRow(
-                        column(9,
+                        column(6,
                                selectInput("INDICATOR4",NULL,choices=unique(indicator_file$Description),selected="Select")
                         ),
                         
@@ -115,12 +145,21 @@ fluidPage(
                                  condition = "input.INDICATOR4 != 'Select'",
                                  numericInput("W4",NULL,value=1)
                                                )
-                              )
+                              ),
+                        
+                        column(3, 
+                               conditionalPanel(
+                                 condition = "input.INDICATOR2 != 'Select'",
+                                 h4(textOutput("ind4"), style="margin-top:5%")
+                               )
+                               )
+                        
+                        
                               ),
                       
                       # Indicator 5
                       fluidRow(
-                        column(9,
+                        column(6,
                                selectInput("INDICATOR5",NULL,choices=unique(indicator_file$Description),selected="Select")
                                ),
                         
@@ -129,12 +168,20 @@ fluidPage(
                                  condition = "input.INDICATOR5 != 'Select'",
                                  numericInput("W5",NULL,value=1)
                                                )   
-                              )
+                              ),
+                        
+                        column(3, 
+                               conditionalPanel(
+                                 condition = "input.INDICATOR2 != 'Select'",
+                                 h4(textOutput("ind5"), style="margin-top:5%")
+                               )
+                               )
+                        
                               ),
                       
                       # Indicator 6
                       fluidRow(
-                        column(9,
+                        column(6,
                                selectInput("INDICATOR6",NULL,choices=unique(indicator_file$Description),selected="Select")
                         ),
                         column(3, 
@@ -142,15 +189,28 @@ fluidPage(
                                  condition = "input.INDICATOR6 != 'Select'",
                                  numericInput("W6",NULL,value=1)
                                                )
-                              )
+                              ),
+                        
+                        column(3, 
+                               conditionalPanel(
+                                 condition = "input.INDICATOR2 != 'Select'",
+                                 h4(textOutput("ind6"), style="margin-top:5%")
+                               )
+                               )
+                        
                               ),
                       
                       # Structural data table
-                      tableOutput("struc_table"),
-                      tableOutput("str_matchind"),
-                      tableOutput("struc_rank")
-                       
+                     
+                      h4("Structural Comparators"),     
+
+                      radioButtons("RESTRICTION",NULL, choices=c("All"="all","Regional"="region","Landlocked"="landlocked", "Small States"="small"), inline=T, selected="all"),
                            
+                      
+                      tableOutput("struc_result"),
+                      tableOutput("struc_rank"),
+                      tableOutput("struc_table"),
+                      tableOutput("str_matchind")
                            
                           ),
                   tabPanel("Aspirational Comparators")
