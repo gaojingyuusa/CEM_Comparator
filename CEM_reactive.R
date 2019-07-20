@@ -13,6 +13,10 @@ country.region <- reactive({
   country.region.txt <- reactive({
     paste("Region:",region(data_file[data_file$countryname==input$TARGET %>% unique,"iso3"],"Region"))
   })
+  
+  period <- reactive({
+    paste0(input$TARGET," ",input$YEAR[1],"-",input$YEAR[2]," Mean")
+  })
 
 # 2 reactive component of target country income
 country.income <- reactive({

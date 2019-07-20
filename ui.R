@@ -38,6 +38,7 @@ fluidPage(
     
     # Customization Pane
     sidebarPanel(id="sidebar",
+                 img(src="wbg_efi.png", height = 50),
                  h3(strong("Customization"),style="color:#002244"),
                  selectInput("TARGET","Select Target Country",
                              #shiny::HTML("<p><span style='color: grey; padding: 0px; margin: 0px;'>Select Target Country</span></p>"),
@@ -45,7 +46,7 @@ fluidPage(
                  h4(""),
                  sliderInput("YEAR","Select Period", min=1960, max=2018,value=c(2012,2017)),
                  h4(""),
-                 h5(strong("WBG Categories")),
+                 h5(strong("Profile")),
                  h5(textOutput("country"),style="color:#009FDA"),
                  textOutput("country.region.txt"),
                  textOutput("country.income"),
@@ -61,11 +62,11 @@ fluidPage(
     # Main Panel: Structural and Aspirational
     mainPanel(
       tabsetPanel(type="tabs",
+                  ## Structural Comparators
                   tabPanel("Structural Comparators",
-                           h3("Find Structural Comparators", style="color:#002244"),
-                           h3(textOutput("country"), style="color:#009FDA"),
-                           p("Structural comparators are defined as countries that are similar to the target country in terms of selected indicators."),
-                           h4(strong("Select up to 6 indicators and their weight")),
+                           h3("Find Structural Comparators", style="color:#002244"),h3(textOutput("country.txt"), style="color:#009FDA"),
+                        #   p("Structural comparators are defined as countries that are similar to the target country in terms of selected indicators."),
+                           h5(strong("Select Structural Indicators")),
                       # Title of indicator selections
                          fluidRow(
                            column(4,
@@ -77,7 +78,7 @@ fluidPage(
                                  ),
                            
                            column(5,
-                                  "Average"
+                                  textOutput("period")
                                  )
                            
                                  ),
@@ -97,7 +98,7 @@ fluidPage(
                            column(5, 
                                   conditionalPanel(
                                     condition = "input.INDICATOR1 != 'Select'",
-                                    h4(textOutput("ind1"), style="margin-top:2%")
+                                    h4(textOutput("ind1"), style="margin-top:2%;color:#009FDA")
                                   )
                                   )
                            
@@ -118,7 +119,7 @@ fluidPage(
                         column(5, 
                                conditionalPanel(
                                  condition = "input.INDICATOR2 != 'Select'",
-                                 h4(textOutput("ind2"), style="margin-top:2%")
+                                 h4(textOutput("ind2"), style="margin-top:2%;color:#009FDA")
                                )
                                )
                         
@@ -140,7 +141,7 @@ fluidPage(
                         column(5, 
                                conditionalPanel(
                                  condition = "input.INDICATOR3 != 'Select'",
-                                 h4(textOutput("ind3"), style="margin-top:2%")
+                                 h4(textOutput("ind3"), style="margin-top:2%;color:#009FDA")
                                )
                                )
                               ),
@@ -161,7 +162,7 @@ fluidPage(
                         column(5, 
                                conditionalPanel(
                                  condition = "input.INDICATOR4 != 'Select'",
-                                 h4(textOutput("ind4"), style="margin-top:2%")
+                                 h4(textOutput("ind4"), style="margin-top:2%;color:#009FDA")
                                )
                                )
                         
@@ -184,7 +185,7 @@ fluidPage(
                         column(5, 
                                conditionalPanel(
                                  condition = "input.INDICATOR5 != 'Select'",
-                                 h4(textOutput("ind5"), style="margin-top:2%")
+                                 h4(textOutput("ind5"), style="margin-top:2%;color:#009FDA")
                                )
                                )
                         
@@ -205,23 +206,23 @@ fluidPage(
                         column(5, 
                                conditionalPanel(
                                  condition = "input.INDICATOR6 != 'Select'",
-                                 h4(textOutput("ind6"), style="margin-top:2%")
+                                 h4(textOutput("ind6"), style="margin-top:2%;color:#009FDA")
                                )
                                )
                         
                               ),
                       
                       # Structural data table
-                     
-                      h4("Structural Comparators"),     
+                      h4("                      "),
+                      h4("Structural Comparators: Top 10 Most Structurally Similar",style="margin-top:20px"),     
 
-                      radioButtons("RESTRICTION",NULL, choices=c("All"="all","Regional"="region","Landlocked"="landlocked", "Small States"="small"), inline=T, selected="all"),
+                      radioButtons("RESTRICTION","Select Category", choices=c("All"="all","Regional"="region","Landlocked"="landlocked", "Small States"="small"), inline=T, selected="all"),
                            
                       
-                      tableOutput("struc_result"),
-                      tableOutput("struc_rank"),
-                      tableOutput("struc_table"),
-                      tableOutput("str_matchind")
+                      tableOutput("struc_result")
+            #          tableOutput("struc_rank"),
+           #           tableOutput("struc_table"),
+          #            tableOutput("str_matchind")
                            
                           ),
                   tabPanel("Aspirational Comparators")

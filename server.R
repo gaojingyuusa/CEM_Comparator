@@ -10,6 +10,15 @@ shinyServer(function(input, output){
   output$country <- renderText({
     country()
   })
+  
+  output$country.txt <- renderText({
+    country()
+  })
+  
+  output$period <- renderText({
+    period()
+  })
+  
   # Region value box
   output$country.region <- renderText({
     country.region()
