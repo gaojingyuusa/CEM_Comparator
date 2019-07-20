@@ -7,13 +7,20 @@ shinyServer(function(input, output){
   source("CEM_reactive.R", local=T)
   
   ## Output in customization pane
+  output$country <- renderText({
+    country()
+  })
   # Region value box
   output$country.region <- renderText({
     country.region()
   })
+   # for the information panel in sidebar only
+   output$country.region.txt <- renderText({
+     country.region.txt()
+   })
   # Income value box
   output$country.income <- renderText({
-    country.income()
+    paste("Income Group:",country.income())
   })
   # Landlocked 
   output$country.land <- renderText({

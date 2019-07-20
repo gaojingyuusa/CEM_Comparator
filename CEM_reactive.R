@@ -1,9 +1,18 @@
 # this script stores all reactive elements for the shiny app
 
 # 1 reactive component of target country group
+
+country <- reactive({
+  input$TARGET
+})
+
 country.region <- reactive({
   region(data_file[data_file$countryname==input$TARGET %>% unique,"iso3"],"Region")
 })
+
+  country.region.txt <- reactive({
+    paste("Region:",region(data_file[data_file$countryname==input$TARGET %>% unique,"iso3"],"Region"))
+  })
 
 # 2 reactive component of target country income
 country.income <- reactive({
@@ -12,17 +21,17 @@ country.income <- reactive({
 
 # 3 reactive component of target country landlocked
 country.landlocked <- reactive({
-  ifelse(region(data_file[data_file$countryname==input$TARGET,"iso3"] %>% unique,"landlocked")==1,"Landlocked","Not Landlocked")
+  paste("Landlocked:",ifelse(region(data_file[data_file$countryname==input$TARGET,"iso3"] %>% unique,"landlocked")==1,"Landlocked","Not Landlocked"))
 })
 
 # 4 reactive component of target country smallstates
 country.small <- reactive({
-  ifelse(region(data_file[data_file$countryname==input$TARGET,"iso3"] %>% unique,"smallstates")==1,"Small state","Not small state")
+  paste("Small States:",ifelse(region(data_file[data_file$countryname==input$TARGET,"iso3"] %>% unique,"smallstates")==1,"Small state","Not small state"))
 })
 
 # 5 reactive component of target country smallstates
 country.fcs <- reactive({
-  ifelse(region(data_file[data_file$countryname==input$TARGET,"iso3"] %>% unique,"fcs")==1,"FCS","Not FCS")
+  paste("Fragile & Conflicted States:",ifelse(region(data_file[data_file$countryname==input$TARGET,"iso3"] %>% unique,"fcs")==1,"FCS","Not FCS"))
 })
 
 # 2 reactive dataset selected by the user
@@ -60,7 +69,7 @@ struc_ranking <- reactive({
   struc_rank[,3:ncol(struc_rank)] <- sweep(struc_rank[,3:ncol(struc_rank)],2, weight,"*")
   struc_rank$weighted_dif <- rowSums(struc_rank[,!names(struc_rank) %in% c("iso3","countryname")],na.rm=T)/sum(weight)
   struc_rank$na_percent <- apply(struc_rank,1, function(x) sum(is.na(x))/length(weight))
-  struc_rank$weighted_dif[struc_rank$weighted_dif==0|struc_rank$na_percent>=0.50] <- NA
+  struc_rank$weighted_dif[struc_rank$weighted_dif==0|struc_rank$na_percent>=0.40] <- NA
   # rows with values more than half
   struc_rank$result <- rank(-struc_rank$weighted_dif, na.last = "keep")
   struc_rank 
@@ -74,37 +83,43 @@ struc_result <- reactive({
   } else if (input$RESTRICTION=="small"){
     full <- full[full$smallstates==1,]
   } else if (input$RESTRICTION=="region"){
-    full <- full[full$Region==country.region(),]
+    full <- full[full$Region==country.region() & !is.na(full$weighted_dif),]
   } else if (input$RESTRICTION=="fcs"){
     full <- full[full$fcs==1,]
   }
   
-  full %>% arrange(desc(-weighted_dif)) %>% slice(1:10)
+  struc_list <- full %>% arrange(desc(-weighted_dif)) %>% slice(1:10) %>% select(Code, weighted_dif)
+  temp <- subset(struc_data(),iso3 %in% struc_list$Code)
+  merge(temp, struc_list, by.x="iso3", by.y="Code") %>% arrange(desc(-weighted_dif)) %>% select(-weighted_dif)
+  #merge(temp,struc_list, by.x=Code, by.y=iso3)
+  #struc_data()[struc_data()$iso3 %in% struc_list[[1]],]
+  #full %>% arrange(desc(-weighted_dif)) %>% slice(1:10) %>% select(Code)
+  #select(-Region, -Income.group, -landlocked, - smallstates, -fcs, - add, -weighted_dif, - na_percent, - result)
 })
 
 # 2.d structural indicator average for tartget country
 ind1 <- reactive({
-  subset(struc_data(),countryname==input$TARGET, select=c(indicator(input$INDICATOR1)))[1,1]
+  subset(struc_data(),countryname==input$TARGET, select=c(indicator(input$INDICATOR1)))[1,1] %>% round(2)
 })
 
 ind2 <- reactive({
-  subset(struc_data(),countryname==input$TARGET, select=c(indicator(input$INDICATOR2)))[1,1]
+  subset(struc_data(),countryname==input$TARGET, select=c(indicator(input$INDICATOR2)))[1,1] %>% round(2)
 })
 
 ind3 <- reactive({
-  subset(struc_data(),countryname==input$TARGET, select=c(indicator(input$INDICATOR3)))[1,1]
+  subset(struc_data(),countryname==input$TARGET, select=c(indicator(input$INDICATOR3)))[1,1] %>% round(2)
 })
 
 ind4 <- reactive({
-  subset(struc_data(),countryname==input$TARGET, select=c(indicator(input$INDICATOR4)))[1,1]
+  subset(struc_data(),countryname==input$TARGET, select=c(indicator(input$INDICATOR4)))[1,1] %>% round(2)
 })
 
 ind5 <- reactive({
-  subset(struc_data(),countryname==input$TARGET, select=c(indicator(input$INDICATOR5)))[1,1]
+  subset(struc_data(),countryname==input$TARGET, select=c(indicator(input$INDICATOR5)))[1,1] %>% round(2)
 })
 
 ind6 <- reactive({
-  subset(struc_data(),countryname==input$TARGET, select=c(indicator(input$INDICATOR6)))[1,1]
+  subset(struc_data(),countryname==input$TARGET, select=c(indicator(input$INDICATOR6)))[1,1] %>% round(2)
 })
 
 
