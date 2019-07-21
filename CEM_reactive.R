@@ -203,3 +203,17 @@ aspr_result_data <- reactive({
   result
 })
 
+
+# 4 Structural Break chart
+# 4.a create table based on target country and selected period
+break_data <- reactive({
+  subset(struc_break_file, country == iso_code(input$TARGET) & year >= input$YEAR2[1] & year <= input$YEAR2[2], select=c("country","year","gdpgrowth"))
+})
+
+# 4.b breakpoint
+break_point <- reactive({
+  point <- as.character(input$YEAR2[2])
+  subset(struc_break_file, country == iso_code(input$TARGET) & year == input$YEAR2[1]) %>% select(contains(point))
+})
+
+# 4.c 

@@ -2,6 +2,7 @@
 
 library(shiny)
 library(DT)
+library(plotly)
 source("CEM_com_functions.R", local=F)
 source("CEM_selector_data.R", local=T)
 
@@ -39,7 +40,7 @@ fluidPage(
     # Customization Pane
     sidebarPanel(id="sidebar",
                  img(src="wbg_efi.png", height = 50),
-                 h3(strong("Customization"),style="color:#002244"),
+                 h3(strong("TARGET COUNTRY"),style="color:#002244"),
                  selectInput("TARGET","STEP 1 Select Target Country",
                              #shiny::HTML("<p><span style='color: grey; padding: 0px; margin: 0px;'>Select Target Country</span></p>"),
                              choices=unique(data_file$countryname),"Afghanistan", multiple = F),
@@ -52,7 +53,12 @@ fluidPage(
                  textOutput("country.income"),
                  textOutput("country.land"),
                  textOutput("country.small"),
-                 textOutput("country.fcs")
+                 textOutput("country.fcs"),
+                 h3(strong("STRUCTURAL BREAK"),style="color:#009FDA"),
+                 sliderInput("YEAR2","Structural Break Period", min=1981, max=2017,value=c(1981,2017)),
+          #       tableOutput("break_point"),
+                # tableOutput("break_data"),
+                 plotlyOutput("break_plot")
                 # checkboxInput("REGION", "Regional Peers", value=FALSE),
                 # checkboxInput("LAND", "Landlocked", value=FALSE),
                 # checkboxInput("SMALL", "Small States", value=FALSE),

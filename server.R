@@ -1,7 +1,7 @@
 # set up the server file for CEM country selection tool
 
 library(shiny)
-
+library(plotly)
 # major server function
 shinyServer(function(input, output, session){
   source("CEM_reactive.R", local=T)
@@ -42,6 +42,23 @@ shinyServer(function(input, output, session){
   # Landlocked 
   output$country.fcs <- renderText({
     country.fcs()
+  })
+  
+  # Structural break
+  output$break_data <- renderTable({
+    break_data()
+  })
+  
+  output$break_point <- renderTable({
+    break_point()
+  })
+  
+  output$break_plot <-renderPlotly({
+    break_data()
+    k <- ggplot(break_data(),aes(break_data()[,2],break_data()[,3])) + 
+      geom_line(size=1,color="#002244") + labs(title = "Structural Break: GDP Growth", x = "Year") + #theme_minimal() + #x_time() + 
+      scale_y_continuous("") + theme(legend.position="none") + theme(panel.background = element_rect(fill='white'))+ geom_vline(xintercept = break_point()[[1]],color="#009FDA")
+    ggplotly(k) %>% layout(yaxis=list(titlefont=list(size=8)),xaxis=list(titlefont=list(size=8)),height=200) 
   })
 
 # Structural data table

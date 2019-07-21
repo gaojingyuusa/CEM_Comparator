@@ -25,6 +25,28 @@ class_file <- read.csv("iso_class.csv", header=T) %>% text.fun()
 # Indicator class file: indicator_file contains the description of each indicator used in the tool
 indicator_file <- read.csv("indicator.csv", header=T) %>% text.fun()
 
+# Structural Break data from Miodrag
+struc_break_file <- read.csv("CEM_stru_break.csv", header=T) %>% text.fun()
+
+# ISO and Name concordance table
+iso_name <- unique(data_file[,c("iso3","countryname")])
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 summary <- aggregate(data_file, by = list(data_file$countryname), FUN=mean, na.rm=T) %>% subset(select=c("Group.1", "gdp","gdppc")) %>% mutate(add=1)
 #rank(-summary$gdp, na.last="keep") ,"gdpc","gdppc","gdppcc"
