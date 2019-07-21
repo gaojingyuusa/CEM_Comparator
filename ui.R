@@ -253,8 +253,13 @@ fluidPage(
                      # textOutput("period")
                ),
                
-               column(3,
+               column(2,
                       "Average"
+                      # textOutput("period")
+               ),
+               
+               column(2,
+                      "Max"
                       # textOutput("period")
                )
                      ),
@@ -271,12 +276,19 @@ fluidPage(
                                     )
                      ),
                
-               column(3, 
+               column(2, 
                       conditionalPanel(
                         condition = "input.ASPR != 'Select'",
                         h4(textOutput("aspr_target_mean"), style="margin-top:5%;color:#009FDA")
                                       )
-                     )
+                     ),
+               
+               column(2, 
+                      conditionalPanel(
+                        condition = "input.ASPR != 'Select'",
+                        h4(textOutput("aspr_target_max"), style="margin-top:5%;color:#009FDA")
+                                      )
+                      )
                
                      ),
                
@@ -329,7 +341,6 @@ fluidPage(
                
     
                        ),
-    
                tableOutput("aspr_data")
     
     

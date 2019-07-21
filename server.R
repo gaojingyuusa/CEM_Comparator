@@ -100,7 +100,12 @@ shinyServer(function(input, output, session){
   output$aspr_target_rank <- renderText(
     aspr_target_rank()
   )
-   #
+  
+   # Max
+  output$aspr_target_max <- renderText(
+    aspr_target_max()
+  )
+   # Dynamic default value in lower bound of rank and value
     observe({
     updateNumericInput(session, "RANK_L",
                       value=aspr_target_rank()
@@ -109,6 +114,12 @@ shinyServer(function(input, output, session){
     observe({
       updateNumericInput(session, "VALUE_L",
                          value=aspr_target_mean()
+      )})
+    
+    observe({
+      updateNumericInput(session, "VALUE_U",
+                         value=aspr_target_max(),
+                         max=aspr_target_max()
       )})
   
 })

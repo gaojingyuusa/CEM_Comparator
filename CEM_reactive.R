@@ -156,5 +156,9 @@ aspr_target_mean <- reactive({
 aspr_target_rank <- reactive({
   subset(aspr_data(),countryname==input$TARGET, select=c("rank"))[1,1] 
 })
+ # max
+aspr_target_max <- reactive({
+  max(subset(aspr_data(),select=c(indicator(input$ASPR)))[[1]],na.rm=T)
+})
 
 
