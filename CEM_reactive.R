@@ -93,9 +93,11 @@ struc_result <- reactive({
     full <- full[full$fcs==1,]
   }
   
-  struc_list <- full %>% arrange(desc(-weighted_dif)) %>% slice(1:10) %>% select(Code, weighted_dif)
-  temp <- subset(struc_data(),iso3 %in% struc_list$Code)
-  merge(temp, struc_list, by.x="iso3", by.y="Code") %>% arrange(desc(-weighted_dif)) %>% select(-weighted_dif)
+  struc_list <- full %>% arrange(desc(-weighted_dif)) %>% slice(1:10) %>% select(Code, countryname)
+  names(struc_list) <- c("ISO","Structural Comparators")
+  struc_list
+#  temp <- subset(struc_data(),iso3 %in% struc_list$Code)
+#  merge(temp, struc_list, by.x="iso3", by.y="Code") %>% arrange(desc(-weighted_dif)) %>% select(-weighted_dif)
   #merge(temp,struc_list, by.x=Code, by.y=iso3)
   #struc_data()[struc_data()$iso3 %in% struc_list[[1]],]
   #full %>% arrange(desc(-weighted_dif)) %>% slice(1:10) %>% select(Code)
@@ -161,4 +163,27 @@ aspr_target_max <- reactive({
   max(subset(aspr_data(),select=c(indicator(input$ASPR)))[[1]],na.rm=T)
 })
 
+# 3.c create country list that are within the determined range of rank or value
+  # within rank
+aspr_within_rank <- reactive({
+  aspr_data()[aspr_data()[[4]]>=input$RANK_U & aspr_data()[[4]]<=input$RANK_L,2] %>% na.omit()
+})
+  # within value
+aspr_within_value <- reactive({
+  aspr_data()[aspr_data()[[3]]>=input$VALUE_L & aspr_data()[[3]]<=input$VALUE_U,2] %>% na.omit()
+})
+
+# 3.d create result table using aspr_within_rank or aspr_within_value to filter struc_rank
+aspr_result <- reactive({
+  if(input$RANKVALUE=="rank") {
+    middle <- aspr_within_rank()
+  } else if (input$RANKVALUE=="value") {
+    middle <- aspr_within_value()
+  }
+  aspr_list <- subset(struc_ranking(),iso3 %in% middle) %>% arrange(desc(-weighted_dif)) %>% slice(1:10) %>% select(iso3, countryname)
+  names(aspr_list) <- c("ISO", "Aspirational Comparators")
+  aspr_list
+ # temp <- subset(struc_data(),iso3 %in% aspr_list$iso3)
+ # merge(temp, aspr_list, by.x="iso3", by.y="iso3") %>% arrange(desc(-weighted_dif)) %>% select(-weighted_dif)
+})
 

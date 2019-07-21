@@ -213,6 +213,8 @@ fluidPage(
                         
                               ),
                       
+                      h3("                      "),
+                      radioButtons("RESTRICTION","Optional: Select Category", choices=c("All"="all","Regional"="region","Landlocked"="landlocked", "Small States"="small"), inline=T, selected="all"),
                       
                       # Structural data table
                       h3("                      "),
@@ -221,10 +223,11 @@ fluidPage(
                       h4("                      "),
                       h4("Structural Comparators: Top 10 Most Structurally Similar Countries",style="margin-top:20px"),     
 
-                      radioButtons("RESTRICTION","Select Category", choices=c("All"="all","Regional"="region","Landlocked"="landlocked", "Small States"="small"), inline=T, selected="all"),
+               #       radioButtons("RESTRICTION","Select Category", choices=c("All"="all","Regional"="region","Landlocked"="landlocked", "Small States"="small"), inline=T, selected="all"),
                            
                       
-                      tableOutput("struc_result")
+                      tableOutput("struc_result"),
+                      p("Note: In descending order of similarity", style="color:grey")
             #          tableOutput("struc_rank"),
            #           tableOutput("struc_table"),
           #            tableOutput("str_matchind")
@@ -337,11 +340,30 @@ fluidPage(
                column(2,
                       numericInput("VALUE_U",NULL,value=1, step=1)
                )
-               
-               
-    
                        ),
-               tableOutput("aspr_data")
+              
+              h3("      "),
+              radioButtons("RANKVALUE","STEP 6: Select Criteria", choices=c("By Rank"="rank","By Value"="value"), inline=T, selected="rank"),
+              h3("      "), 
+      # results and data tabs for aspirational comparators
+      tabsetPanel(type="tabs",
+                tabPanel("Results",
+                          h4("Aspirational Comparators: Top 10 Most Structurally Similar Countries Ahead",style="margin-top:20px"),
+ #                         radioButtons("RANKVALUE","Select Category", choices=c("By Rank"="rank","By Value"="value"), inline=T, selected="rank"),
+                        #  tableOutput("aspr_within_rank")
+                          tableOutput("aspr_result"),
+                          p("Note: In descending order of similarity", style="color:grey")
+                        ),
+                tabPanel("Data",
+                         tableOutput("aspr_within_value")
+                        )
+                
+                 )
+    
+    
+    
+    
+             #  tableOutput("aspr_data")
     
     
     

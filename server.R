@@ -121,5 +121,20 @@ shinyServer(function(input, output, session){
                          value=aspr_target_max(),
                          max=aspr_target_max()
       )})
+    
+    # Aspsrational within rank list of countries
+    output$aspr_within_rank <- renderTable(
+      aspr_within_rank()
+    )
+    
+    # Aspsrational within value list of countries
+    output$aspr_within_value <- renderTable(
+      aspr_within_value()
+    )
+    
+    # Result list of countries
+    output$aspr_result <- renderTable(
+      aspr_result()
+    )
   
 })
