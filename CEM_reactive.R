@@ -18,27 +18,28 @@ country.region <- reactive({
     paste0(input$TARGET," ",input$YEAR[1],"-",input$YEAR[2]," Mean")
   })
 
-# 2 reactive component of target country income
+# 1.a reactive component of target country income
 country.income <- reactive({
   region(data_file[data_file$countryname==input$TARGET %>% unique,"iso3"],"Income.group")
 })
 
-# 3 reactive component of target country landlocked
+# 1.b reactive component of target country landlocked
 country.landlocked <- reactive({
   paste("Landlocked:",ifelse(region(data_file[data_file$countryname==input$TARGET,"iso3"] %>% unique,"landlocked")==1,"Landlocked","Not Landlocked"))
 })
 
-# 4 reactive component of target country smallstates
+# 1.c reactive component of target country smallstates
 country.small <- reactive({
   paste("Small States:",ifelse(region(data_file[data_file$countryname==input$TARGET,"iso3"] %>% unique,"smallstates")==1,"Small state","Not small state"))
 })
 
-# 5 reactive component of target country smallstates
+# 1.d reactive component of target country smallstates
 country.fcs <- reactive({
   paste("Fragile & Conflicted States:",ifelse(region(data_file[data_file$countryname==input$TARGET,"iso3"] %>% unique,"fcs")==1,"FCS","Not FCS"))
 })
 
-# 2 reactive dataset selected by the user
+
+# 2 Structural: reactive dataset selected by the user
 struc_data <- reactive({
   # convert to short name
   ind <- c(input$INDICATOR1,input$INDICATOR2,input$INDICATOR3,input$INDICATOR4,input$INDICATOR5,input$INDICATOR6) %>% sapply(indicator) #%>% unique()
@@ -125,5 +126,27 @@ ind5 <- reactive({
 ind6 <- reactive({
   subset(struc_data(),countryname==input$TARGET, select=c(indicator(input$INDICATOR6)))[1,1] %>% round(2)
 })
+
+
+# 3 As[pirational: reactive dataset selected by the user
+
+# 3.a aspirarional indicator data table
+aspr_data <- reactive({
+  middle <- subset(data_file, year>=input$YEAR[1] & year<=input$YEAR[2] ,select=c("countryname","iso3","year",indicator(input$ASPR))) 
+  middle <- aggregate(middle, by = list(middle$countryname,middle$iso3), FUN=mean, na.rm=T) 
+  result <- middle[,!names(middle) %in% c("iso3","countryname","year")]
+  names(result)[1:2] <- c("countryname","iso3")
+  result$rank <- rank(-result[,3], na.last="keep") %>% as.integer()
+  result
+})
+
+# 3.b ranking of aspirational indicator data table
+# aspr_rank <- reactive({
+# aspr_rank <- aspr_data() 
+# aspr_rank[,3] <- rank(-aspr_rank[,3], na.last="keep")
+#  aspr_rank
+# })
+
+# 3.c
 
 

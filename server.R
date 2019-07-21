@@ -79,6 +79,16 @@ shinyServer(function(input, output){
   output$ind6 <- renderText(
     ind6()
   )
+
+# Aspirational data table
+  # Aspirational indicator table
+  output$aspr_data <- renderTable(
+    aspr_data()
+  )
   
+  # Aspirational indicator ranking
+  output$aspr_rank <- renderTable(
+    aspr_rank()
+  )
   
 })

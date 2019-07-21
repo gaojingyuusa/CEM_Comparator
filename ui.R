@@ -40,11 +40,11 @@ fluidPage(
     sidebarPanel(id="sidebar",
                  img(src="wbg_efi.png", height = 50),
                  h3(strong("Customization"),style="color:#002244"),
-                 selectInput("TARGET","Select Target Country",
+                 selectInput("TARGET","STEP 1 Select Target Country",
                              #shiny::HTML("<p><span style='color: grey; padding: 0px; margin: 0px;'>Select Target Country</span></p>"),
                              choices=unique(data_file$countryname),"Afghanistan", multiple = F),
                  h4(""),
-                 sliderInput("YEAR","Select Period", min=1960, max=2018,value=c(2012,2017)),
+                 sliderInput("YEAR","STEP 2 Select Period", min=1960, max=2018,value=c(2012,2017)),
                  h4(""),
                  h5(strong("Profile")),
                  h5(textOutput("country"),style="color:#009FDA"),
@@ -64,13 +64,14 @@ fluidPage(
       tabsetPanel(type="tabs",
                   ## Structural Comparators
                   tabPanel("Structural Comparators",
-                           h3("Find Structural Comparators", style="color:#002244"),h3(textOutput("country.txt"), style="color:#009FDA"),
+                        #  h3("Find Structural Comparators", style="color:#002244"),
+                        #   h3(textOutput("country.txt"), style="color:#009FDA"),
                         #   p("Structural comparators are defined as countries that are similar to the target country in terms of selected indicators."),
-                           h5(strong("Select Structural Indicators")),
+                           h5(strong("STEP 3 Select Structural Indicators")),
                       # Title of indicator selections
                          fluidRow(
                            column(4,
-                                 "Indicators"
+                                 "Structural indicators"
                                  ),
 
                            column(3,
@@ -212,9 +213,13 @@ fluidPage(
                         
                               ),
                       
+                      
                       # Structural data table
+                      h3("                      "),
+          tabsetPanel(type="tabs",
+                      tabPanel("Results",  
                       h4("                      "),
-                      h4("Structural Comparators: Top 10 Most Structurally Similar",style="margin-top:20px"),     
+                      h4("Structural Comparators: Top 10 Most Structurally Similar Countries",style="margin-top:20px"),     
 
                       radioButtons("RESTRICTION","Select Category", choices=c("All"="all","Regional"="region","Landlocked"="landlocked", "Small States"="small"), inline=T, selected="all"),
                            
@@ -223,9 +228,64 @@ fluidPage(
             #          tableOutput("struc_rank"),
            #           tableOutput("struc_table"),
           #            tableOutput("str_matchind")
-                           
+                      ),
+                      tabPanel("Data", 
+                      tableOutput("struc_rank")     
+                      )
+                      )
                           ),
-                  tabPanel("Aspirational Comparators")
+          
+          
+         tabPanel("Aspirational Comparators",
+             
+             #  h3("Find Aspiratio Comparators", style="color:#002244"),
+    #         h3(textOutput("country.txt"), style="color:#009FDA"),
+             #   p("Structural comparators are defined as countries that are similar to the target country in terms of selected indicators."),
+             h5(strong("STEP 4 Select Aspirational Indicator")),
+             # Title of indicator selections
+             fluidRow(
+               column(4,
+                      "Aspirational Indicator"
+               ),
+               
+               column(2,
+                      "Ranking"
+                     # textOutput("period")
+               ),
+               
+               column(3,
+                      "Average"
+                      # textOutput("period")
+               )
+                     ),
+    
+              fluidRow(
+               column(4,#style="margin-bottom:0px;padding-right:0px;padding-bottom:0px",
+                    selectInput("ASPR",NULL,choices=unique(indicator_file$Description),selected="GDP (constant 2010 US$)")
+                     ),
+               
+               column(5, 
+                    conditionalPanel(
+                    condition = "input.ASPR != 'Select'",
+                   # h4(textOutput("ind1"), style="margin-top:2%;color:#009FDA")
+                    p("bitch")
+                                    )
+                     ) 
+                     ),
+               
+               tableOutput("aspr_data")
+    
+    
+    
+             
+                 )
+    
+    
+    
+    
+  # DON'T TOUCH PARENTHESIS BELOW THIS LINE  
+    
+    
                  )
              )
                )
