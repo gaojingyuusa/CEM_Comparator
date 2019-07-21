@@ -147,6 +147,14 @@ aspr_data <- reactive({
 #  aspr_rank
 # })
 
-# 3.c
+# 3.c mean and ranking of target country in aspirational indicator
+ # mean
+aspr_target_mean <- reactive({
+  subset(aspr_data(),countryname==input$TARGET, select=c(indicator(input$ASPR)))[1,1] %>% round(2)
+})
+ # rank
+aspr_target_rank <- reactive({
+  subset(aspr_data(),countryname==input$TARGET, select=c("rank"))[1,1] 
+})
 
 

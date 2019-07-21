@@ -3,7 +3,7 @@
 library(shiny)
 
 # major server function
-shinyServer(function(input, output){
+shinyServer(function(input, output, session){
   source("CEM_reactive.R", local=T)
   
   ## Output in customization pane
@@ -90,5 +90,25 @@ shinyServer(function(input, output){
   output$aspr_rank <- renderTable(
     aspr_rank()
   )
+  
+  # Aspirational indicaotr of target
+   # Mean
+  output$aspr_target_mean <- renderText(
+    aspr_target_mean()
+  )
+   # Rank
+  output$aspr_target_rank <- renderText(
+    aspr_target_rank()
+  )
+   #
+    observe({
+    updateNumericInput(session, "RANK_L",
+                      value=aspr_target_rank()
+          )})
+    
+    observe({
+      updateNumericInput(session, "VALUE_L",
+                         value=aspr_target_mean()
+      )})
   
 })

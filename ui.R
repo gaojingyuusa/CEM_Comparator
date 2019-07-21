@@ -15,7 +15,7 @@ fluidPage(
                     ",
                     
                     "
-                     .form-group, .selectize-control {
+                    .form-group, .selectize-control {
                     margin-bottom: 2px;
                     }
                     .box-body {
@@ -249,7 +249,7 @@ fluidPage(
                ),
                
                column(2,
-                      "Ranking"
+                      "Rank"
                      # textOutput("period")
                ),
                
@@ -264,15 +264,72 @@ fluidPage(
                     selectInput("ASPR",NULL,choices=unique(indicator_file$Description),selected="GDP (constant 2010 US$)")
                      ),
                
-               column(5, 
+               column(2, 
                     conditionalPanel(
                     condition = "input.ASPR != 'Select'",
-                   # h4(textOutput("ind1"), style="margin-top:2%;color:#009FDA")
-                    p("bitch")
+                    h4(textOutput("aspr_target_rank"), style="margin-top:5%;color:#009FDA")
                                     )
-                     ) 
                      ),
                
+               column(3, 
+                      conditionalPanel(
+                        condition = "input.ASPR != 'Select'",
+                        h4(textOutput("aspr_target_mean"), style="margin-top:5%;color:#009FDA")
+                                      )
+                     )
+               
+                     ),
+               
+               # determine by rank or by value
+               h4("  "),
+               h5(strong("STEP 5 Lower and Upper Bound")),
+    
+               # set the lower and upper bound numeric input
+               fluidRow(
+               
+               column(2,  
+               h5("Lower Rank",style="color:#009FDA")
+                     ),
+               column(2,
+               h5("Upper Rank",style="color:#009FDA")
+                     ),
+               column(1,
+               h4("")       
+                      ),
+               column(2,  
+                      h5("Lower Value",style="color:#002244")
+               ),
+               column(2,
+                      h5("Upper Value",style="color:#002244")
+               )
+               
+               
+                       ),
+               fluidRow(
+               
+        
+               column(2,
+                      numericInput("RANK_L",NULL,value=1, min=1, max=233, step=1)
+                     ),
+
+               column(2,
+                      numericInput("RANK_U",NULL,value=1, min=1, max=233, step=1)
+                     ),
+               column(1,
+               h4("")
+                     ),
+               column(2,
+                      numericInput("VALUE_L",NULL,value=1, step=1)
+               ),
+               
+               column(2,
+                      numericInput("VALUE_U",NULL,value=1, step=1)
+               )
+               
+               
+    
+                       ),
+    
                tableOutput("aspr_data")
     
     
