@@ -60,6 +60,10 @@ shinyServer(function(input, output, session){
   output$struc_result <- renderTable(
     struc_result()
   )
+    # Structural result: data of the full list
+  output$struc_result_data <- renderTable(
+    struc_result_data()
+  )
     # Average for target country
   output$ind1 <- renderText(
     ind1()
@@ -122,7 +126,7 @@ shinyServer(function(input, output, session){
                          max=aspr_target_max()
       )})
     
-    # Aspsrational within rank list of countries
+    # Aspirational within rank list of countries
     output$aspr_within_rank <- renderTable(
       aspr_within_rank()
     )
@@ -135,6 +139,11 @@ shinyServer(function(input, output, session){
     # Result list of countries
     output$aspr_result <- renderTable(
       aspr_result()
+    )
+    
+    # Aspirational data table of the result
+    output$aspr_result_data <- renderTable(
+      aspr_result_data()
     )
   
 })

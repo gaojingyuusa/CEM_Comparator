@@ -221,7 +221,7 @@ fluidPage(
           tabsetPanel(type="tabs",
                       tabPanel("Results",  
                       h4("                      "),
-                      h4("Structural Comparators: Top 10 Most Structurally Similar Countries",style="margin-top:20px"),     
+                      h4("Structural Comparators: Top 10 Most Structurally Similar Countries",style="margin-top:20px;color:#009FDA"),     
 
                #       radioButtons("RESTRICTION","Select Category", choices=c("All"="all","Regional"="region","Landlocked"="landlocked", "Small States"="small"), inline=T, selected="all"),
                            
@@ -233,7 +233,9 @@ fluidPage(
           #            tableOutput("str_matchind")
                       ),
                       tabPanel("Data", 
-                      tableOutput("struc_rank")     
+                      h4("      "),
+                      p("Table below contains the actual value of structural indicators per structural comparators, which is the simply average of selected period of years.", style="color:grey"),
+                      tableOutput("struc_result_data")     
                       )
                       )
                           ),
@@ -348,14 +350,16 @@ fluidPage(
       # results and data tabs for aspirational comparators
       tabsetPanel(type="tabs",
                 tabPanel("Results",
-                          h4("Aspirational Comparators: Top 10 Most Structurally Similar Countries Ahead",style="margin-top:20px"),
+                          h4("Aspirational Comparators: Top 10 Most Structurally Similar Countries Ahead",style="margin-top:20px;color:#009FDA"),
  #                         radioButtons("RANKVALUE","Select Category", choices=c("By Rank"="rank","By Value"="value"), inline=T, selected="rank"),
                         #  tableOutput("aspr_within_rank")
                           tableOutput("aspr_result"),
                           p("Note: In descending order of similarity", style="color:grey")
                         ),
                 tabPanel("Data",
-                         tableOutput("aspr_within_value")
+                         h4(" "),
+                         p("Table below contains the actual value of structural indicators per structural comparators, which is the simply average of selected period of years. Listed countries are countries within selected range only.", style="color:grey"),
+                         tableOutput("aspr_result_data")
                         )
                 
                  )

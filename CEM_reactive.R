@@ -93,8 +93,8 @@ struc_result <- reactive({
     full <- full[full$fcs==1,]
   }
   
-  struc_list <- full %>% arrange(desc(-weighted_dif)) %>% slice(1:10) %>% select(Code, countryname)
-  names(struc_list) <- c("ISO","Structural Comparators")
+  struc_list <- full %>% arrange(desc(-weighted_dif)) %>% slice(1:10) %>% select(Code, countryname, weighted_dif)
+  names(struc_list) <- c("ISO","Structural Comparators","Weighted_Distance")
   struc_list
 #  temp <- subset(struc_data(),iso3 %in% struc_list$Code)
 #  merge(temp, struc_list, by.x="iso3", by.y="Code") %>% arrange(desc(-weighted_dif)) %>% select(-weighted_dif)
@@ -102,6 +102,14 @@ struc_result <- reactive({
   #struc_data()[struc_data()$iso3 %in% struc_list[[1]],]
   #full %>% arrange(desc(-weighted_dif)) %>% slice(1:10) %>% select(Code)
   #select(-Region, -Income.group, -landlocked, - smallstates, -fcs, - add, -weighted_dif, - na_percent, - result)
+})
+
+# 2.c structural comparators raw data table
+struc_result_data <- reactive({
+  temp <- subset(struc_data(),iso3 %in% struc_result()$ISO)
+  result <- merge(temp, struc_result(), by.x="iso3", by.y="ISO") %>% arrange(desc(-Weighted_Distance)) %>% select(-"Structural Comparators")
+  names(result)[1:2] <- c("ISO", "Structural Comparators")
+  result
 })
 
 # 2.d structural indicator average for tartget country
@@ -180,10 +188,18 @@ aspr_result <- reactive({
   } else if (input$RANKVALUE=="value") {
     middle <- aspr_within_value()
   }
-  aspr_list <- subset(struc_ranking(),iso3 %in% middle) %>% arrange(desc(-weighted_dif)) %>% slice(1:10) %>% select(iso3, countryname)
-  names(aspr_list) <- c("ISO", "Aspirational Comparators")
+  aspr_list <- subset(struc_ranking(),iso3 %in% middle) %>% arrange(desc(-weighted_dif)) %>% slice(1:10) %>% select(iso3, countryname, weighted_dif)
+  names(aspr_list) <- c("ISO", "Aspirational Comparators", "Weighted_Distance")
   aspr_list
  # temp <- subset(struc_data(),iso3 %in% aspr_list$iso3)
  # merge(temp, aspr_list, by.x="iso3", by.y="iso3") %>% arrange(desc(-weighted_dif)) %>% select(-weighted_dif)
+})
+
+# 3.e aspirational comparators raw data table
+aspr_result_data <- reactive({
+  temp <- subset(struc_data(),iso3 %in% aspr_result()$ISO)
+  result <- merge(temp, aspr_result(), by.x="iso3", by.y="ISO") %>% arrange(desc(-Weighted_Distance)) %>% select(-"Aspirational Comparators")
+  names(result)[1:2] <- c("ISO", "Aspirational Comparators")
+  result
 })
 
