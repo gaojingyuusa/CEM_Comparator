@@ -169,5 +169,45 @@ shinyServer(function(input, output, session){
     output$aspr_result_data <- renderTable(
       aspr_result_data()
     )
+    
+    
+    # Global maps of comparators
+    output$struc_map <- renderPlotly({
+   
+      LAND_ISO <- struc_result()[,"ISO"]
+      value <- rep(1, length(LAND_ISO))
+      
+      data <- data.frame(LAND_ISO, value)
+      
+      # Run your code:
+      g <- list(
+        showframe = FALSE,
+        showland = T,
+        landcolor = "#002244",
+        showcoastlines = FALSE,
+        projection = list(type = 'orthographic'),
+        resolution = '100',
+        showcountries = TRUE,
+        countrycolor = "white",
+        showocean = TRUE,
+        oceancolor = '#F2F2F2',
+        showlakes = TRUE,
+        lakecolor = '#DBDBDB'
+      )
+      
+      plot_geo(data) %>%
+        add_trace(
+          z = ~value, locations = ~LAND_ISO,
+          color = ~value, colors = '#009FDA',
+          showscale=FALSE
+        ) %>%
+        colorbar(title = "") %>%
+        layout(geo = g, showlegend = FALSE, hovermode = 'closest')
+    })
+    
+    
+    
+    
+    
   
 })

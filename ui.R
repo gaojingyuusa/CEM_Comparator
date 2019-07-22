@@ -232,8 +232,16 @@ fluidPage(
 
                #       radioButtons("RESTRICTION","Select Category", choices=c("All"="all","Regional"="region","Landlocked"="landlocked", "Small States"="small"), inline=T, selected="all"),
                            
-                      
-                      tableOutput("struc_result"),
+                      fluidRow(
+                          column(5,
+                          tableOutput("struc_result")
+                                ),
+                          column(6,
+                                 plotlyOutput("struc_map")
+                                 )
+                              ),
+               
+               
                       p("Note: In descending order of similarity", style="color:grey")
             #          tableOutput("struc_rank"),
            #           tableOutput("struc_table"),
@@ -362,6 +370,7 @@ fluidPage(
                         #  tableOutput("aspr_within_rank")
                           tableOutput("aspr_result"),
                           p("Note: In descending order of similarity", style="color:grey")
+             #             plotlyOutput("struc_map")
                         ),
                 tabPanel("Data",
                          h4(" "),
