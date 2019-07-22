@@ -53,12 +53,19 @@ shinyServer(function(input, output, session){
     break_point()
   })
   
-  output$break_plot <-renderPlotly({
+  output$break_plot <-renderPlot({
     break_data()
     k <- ggplot(break_data(),aes(break_data()[,2],break_data()[,3])) + 
-      geom_line(size=1,color="#002244") + labs(title = "Structural Break: GDP Growth", x = "Year") + #theme_minimal() + #x_time() + 
-      scale_y_continuous("") + theme(legend.position="none") + theme(panel.background = element_rect(fill='white'))+ geom_vline(xintercept = break_point()[[1]],color="#009FDA")
-    ggplotly(k) %>% layout(yaxis=list(titlefont=list(size=8)),xaxis=list(titlefont=list(size=8)),height=200) 
+      geom_line(size=1,color="#002244") + labs(title = "Structural Break: GDP Growth",x="\nYear",y="GDP growth, %\n") + #theme_minimal() + #x_time() + 
+      theme(legend.position="none") + 
+      theme(panel.background = element_rect(fill='white'),
+            plot.title=element_text(hjust=0.4,face="bold",colour="#676669"),
+            axis.title.x=element_text(hjust=0.4,vjust=0.5),
+            axis.title.y=element_text(hjust=0.5, vjust=0)
+            ) + 
+      geom_vline(xintercept = break_point()[[1]],color="#009FDA")
+    k
+    # ggplotly(k) %>% layout(yaxis=list(titlefont=list(size=1)),xaxis=list(titlefont=list(size=1)),height=200) 
   })
 
 # Structural data table
