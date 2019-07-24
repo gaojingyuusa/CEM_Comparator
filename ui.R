@@ -399,6 +399,9 @@ fluidPage(
       
         tabPanel("CEM 2.0 Input",
                  
+                 # Period selection
+                 selectInput("TT_ST","Start", choices=c(1980:2018), 2000),
+                 
                  # List of comparators selected
                  
                    # 3 Structural comparators
@@ -409,7 +412,7 @@ fluidPage(
                  selectInput("STRUT3",NULL,
                              choices=unique(data_file$countryname),"Albania", multiple = F),
                  
-                 # 3 Aspirational comparators
+                   # 3 Aspirational comparators
                  selectInput("ASPR1","Aspirational Comparators",
                              choices=unique(data_file$countryname),"Albania", multiple = F),
                  selectInput("ASPR2",NULL,
@@ -417,7 +420,7 @@ fluidPage(
                  selectInput("ASPR3",NULL,
                              choices=unique(data_file$countryname),"Albania", multiple = F),
                  
-                 # 3 Typology groups
+                   # 3 Typology groups
                  selectInput("TYPO1","Other Groups",
                              choices=unique(typology_list$option),"High income", multiple = F),
                  selectInput("TYPO2",NULL,
@@ -425,7 +428,7 @@ fluidPage(
                  selectInput("TYPO3",NULL,
                              choices=unique(typology_list$option),"IBRD", multiple = F),
                  
-                 # List table
+                   # List table
                  tableOutput("final_list")
                  
                  
