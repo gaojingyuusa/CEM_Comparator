@@ -42,7 +42,6 @@ fluidPage(
                  img(src="wbg_efi.png", height = 50),
                  h3(strong("TARGET COUNTRY"),style="color:#002244"),
                  selectInput("TARGET","STEP 1 Select Target Country",
-                             #shiny::HTML("<p><span style='color: grey; padding: 0px; margin: 0px;'>Select Target Country</span></p>"),
                              choices=unique(data_file$countryname),"Albania", multiple = F),
                  h4(""),
                  sliderInput("YEAR","STEP 2 Select Period", min=1960, max=2018,value=c(2012,2017)),
@@ -396,8 +395,43 @@ fluidPage(
     
     
              
-                 )
-    
+                 ),
+      
+        tabPanel("CEM 2.0 Input",
+                 
+                 # List of comparators selected
+                 
+                   # 3 Structural comparators
+                 selectInput("STRUT1","Structural Comparators",
+                             choices=unique(data_file$countryname),"Albania", multiple = F),
+                 selectInput("STRUT2",NULL,
+                             choices=unique(data_file$countryname),"Albania", multiple = F),
+                 selectInput("STRUT3",NULL,
+                             choices=unique(data_file$countryname),"Albania", multiple = F),
+                 
+                 # 3 Aspirational comparators
+                 selectInput("ASPR1","Aspirational Comparators",
+                             choices=unique(data_file$countryname),"Albania", multiple = F),
+                 selectInput("ASPR2",NULL,
+                             choices=unique(data_file$countryname),"Albania", multiple = F),
+                 selectInput("ASPR3",NULL,
+                             choices=unique(data_file$countryname),"Albania", multiple = F),
+                 
+                 # 3 Typology groups
+                 selectInput("TYPO1","Other Groups",
+                             choices=unique(typology_list$option),"High income", multiple = F),
+                 selectInput("TYPO2",NULL,
+                             choices=unique(typology_list$option),"OECD", multiple = F),
+                 selectInput("TYPO3",NULL,
+                             choices=unique(typology_list$option),"IBRD", multiple = F),
+                 
+                 # List table
+                 tableOutput("final_list")
+                 
+                 
+        
+                )
+     
     
     
     

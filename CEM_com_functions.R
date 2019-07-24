@@ -24,3 +24,15 @@ iso_code <- function(name){
 name_code <- function(iso){
   iso_name[iso_name$iso3==iso,"countryname"]
 }
+
+# 3 typology function
+
+typo <- function(input){
+  dummy <- c("Landlocked", "SmallStates", "IslandStates", "FragileStates", "G20", "Commodity")
+     group1 <- typology_list[typology_list$option==input,"group"][[1]] %>% as.character()
+  if(group1 %in% dummy) {
+    typology_master[typology_master[[group1]]=="Yes", "iso3"] %>% as.character()
+  } else {
+    typology_master[typology_master[[group1]]==input, "iso3"] %>% as.character()
+  }
+}

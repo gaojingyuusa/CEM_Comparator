@@ -244,4 +244,44 @@ break_point_txt <- reactive({
   result
 })
 
-# 4.c 
+
+
+# 5 Final list of comparators
+final_list <- reactive({
+  # Structural and Aspirational
+  name <- c(iso_code(input$TARGET), iso_code(input$STRUT1),iso_code(input$STRUT2),iso_code(input$STRUT3),iso_code(input$ASPR1),iso_code(input$ASPR2),iso_code(input$ASPR3)) #%>% iso_code()
+  code <- c("Target","Struc_1","Struc_2","Struc_3","Apsr_1","Apsr_2","Apsr_3")
+  
+  result <- data.frame(
+    name,
+    code,
+    stringsAsFactors = F
+  )
+  
+  # Typology 1
+  t1 <- data.frame(
+  name=typo(input$TYPO1),
+  code=rep(input$TYPO1,length(typo(input$TYPO1))),
+  stringsAsFactors = F
+                  )
+  
+  # Typology 2
+  t2 <- data.frame(
+    name=typo(input$TYPO2),
+    code=rep(input$TYPO2,length(typo(input$TYPO2))),
+    stringsAsFactors = F
+  )
+  
+  # Typology 3
+  t3 <- data.frame(
+    name=typo(input$TYPO3),
+    code=rep(input$TYPO3,length(typo(input$TYPO3))),
+    stringsAsFactors = F
+  )
+  
+  rbind(result, t1, t2, t3)
+  
+ # Typology
+ # 
+ 
+})

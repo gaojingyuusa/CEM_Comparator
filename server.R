@@ -206,12 +206,16 @@ shinyServer(function(input, output, session){
         add_trace(
           z = ~value, locations = ~LAND_ISO,
           color = ~value, colors = c('#87FFF4','#009FDA'),
-          showscale=FALSE, text=~paste(data$name),hoverinfo="text"
+          showscale=FALSE, text=~paste(data$name),hoverinfo="text", hoverlabel=list(bgcolor="white")
         ) %>% 
         layout(geo = g, showlegend = FALSE, hovermode = 'closest')
     })
     
-    
+  
+  # Final list
+    output$final_list <- renderTable({
+      final_list()
+    })
     
     
     

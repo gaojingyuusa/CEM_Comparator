@@ -31,7 +31,11 @@ struc_break_file <- read.csv("CEM_stru_break.csv", header=T) %>% text.fun()
 # ISO and Name concordance table
 iso_name <- unique(data_file[,c("iso3","countryname")])
 
+# Typology list: user end
+typology_list <- read.csv("typologylist.csv", header=T)
 
+# Typology master table
+typology_master <- read.csv("typology_master.csv", header=T)
 
 
 
