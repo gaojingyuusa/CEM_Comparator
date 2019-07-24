@@ -114,26 +114,44 @@ struc_result_data <- reactive({
 
 # 2.d structural indicator average for tartget country
 ind1 <- reactive({
+  validate({
+    need(input$INDICATOR1 != "Select", "Loading...")
+  })
   subset(struc_data(),countryname==input$TARGET, select=c(indicator(input$INDICATOR1)))[1,1] %>% round(2)
 })
 
 ind2 <- reactive({
+  validate({
+    need(input$INDICATOR2 != "Select", "Loading...")
+  })
   subset(struc_data(),countryname==input$TARGET, select=c(indicator(input$INDICATOR2)))[1,1] %>% round(2)
 })
 
 ind3 <- reactive({
+  validate({
+    need(input$INDICATOR3 != "Select", "Loading...")
+  })
   subset(struc_data(),countryname==input$TARGET, select=c(indicator(input$INDICATOR3)))[1,1] %>% round(2)
 })
 
 ind4 <- reactive({
+  validate({
+    need(input$INDICATOR4 != "Select", "Loading...")
+  })
   subset(struc_data(),countryname==input$TARGET, select=c(indicator(input$INDICATOR4)))[1,1] %>% round(2)
 })
 
 ind5 <- reactive({
+  validate({
+    need(input$INDICATOR5 != "Select", "Loading...")
+  })
   subset(struc_data(),countryname==input$TARGET, select=c(indicator(input$INDICATOR5)))[1,1] %>% round(2)
 })
 
 ind6 <- reactive({
+  validate({
+    need(input$INDICATOR6 != "Select", "Loading...")
+  })
   subset(struc_data(),countryname==input$TARGET, select=c(indicator(input$INDICATOR6)))[1,1] %>% round(2)
 })
 
