@@ -53,6 +53,10 @@ shinyServer(function(input, output, session){
     break_point()
   })
   
+  output$break_point_txt <- renderText({
+    break_point_txt()
+  })
+  
   output$break_plot <-renderPlot({
     break_data()
     k <- ggplot(break_data(),aes(break_data()[,2],break_data()[,3])) + 
@@ -175,9 +179,12 @@ shinyServer(function(input, output, session){
     output$struc_map <- renderPlotly({
    
       LAND_ISO <- struc_result()[,"ISO"]
+      name <- struc_result()[,"Structural Comparators"]
       value <- rep(1, length(LAND_ISO))
       
-      data <- data.frame(LAND_ISO, value)
+      data <- data.frame(LAND_ISO, value, name, stringsAsFactors = F)
+      data[nrow(data) + 1,] = list(iso_code(input$TARGET),0, input$TARGET)
+   #   data$name <- name_code(data$LAND_ISO)
       
       # Run your code:
       g <- list(
@@ -198,10 +205,9 @@ shinyServer(function(input, output, session){
       plot_geo(data) %>%
         add_trace(
           z = ~value, locations = ~LAND_ISO,
-          color = ~value, colors = '#009FDA',
-          showscale=FALSE
-        ) %>%
-        colorbar(title = "") %>%
+          color = ~value, colors = c('#87FFF4','#009FDA'),
+          showscale=FALSE, text=~paste(data$name),hoverinfo="text"
+        ) %>% 
         layout(geo = g, showlegend = FALSE, hovermode = 'closest')
     })
     
