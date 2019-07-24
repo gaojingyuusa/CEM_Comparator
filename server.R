@@ -182,7 +182,7 @@ shinyServer(function(input, output, session){
       # Run your code:
       g <- list(
         showframe = FALSE,
-        showland = T,
+        showland = TRUE,
         landcolor = "#002244",
         showcoastlines = FALSE,
         projection = list(type = 'orthographic'),

@@ -93,7 +93,7 @@ struc_result <- reactive({
     full <- full[full$fcs==1,]
   }
   
-  struc_list <- full %>% arrange(desc(-weighted_dif)) %>% slice(1:10) %>% select(Code, countryname, weighted_dif)
+  struc_list <- full %>% arrange(desc(-weighted_dif)) %>% slice(1:input$STRUC_TOP) %>% select(Code, countryname, weighted_dif)
   names(struc_list) <- c("ISO","Structural Comparators","Weighted_Distance")
   struc_list
 #  temp <- subset(struc_data(),iso3 %in% struc_list$Code)
@@ -214,6 +214,16 @@ break_data <- reactive({
 break_point <- reactive({
   point <- as.character(input$YEAR2[2])
   subset(struc_break_file, country == iso_code(input$TARGET) & year == input$YEAR2[1]) %>% select(contains(point))
+})
+
+# 4.e breakpoint text
+break_point_txt <- reactive({
+  if(is.na(break_point()[[1]])){
+    result <- "No break point"
+  } else {
+    result <- paste0("Break point: ",break_point()[[1]])
+  }
+  result
 })
 
 # 4.c 

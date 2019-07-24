@@ -56,6 +56,8 @@ fluidPage(
                  textOutput("country.fcs"),
                  h3(strong("STRUCTURAL BREAK"),style="color:#009FDA"),
                  sliderInput("YEAR2","Structural Break Period", min=1981, max=2017,value=c(1981,2017)),
+                 h4(" "),
+                 h5(textOutput("break_point_txt"), style="color:#009FDA"),
           #       tableOutput("break_point"),
                 # tableOutput("break_data"),
                  h4(" "),
@@ -228,8 +230,14 @@ fluidPage(
           tabsetPanel(type="tabs",
                       tabPanel("Results",  
                       h4("                      "),
-                      h4("Structural Comparators: Top 10 Most Structurally Similar Countries",style="margin-top:20px;color:#009FDA"),     
-
+                      h4("Structural Comparators: Top 10 Most Structurally Similar Countries",style="margin-top:20px;color:#009FDA"), 
+                      
+                      fluidRow(
+                        column(3,
+                        numericInput("STRUC_TOP","Number of Comparators", value=10, max=200)
+                              )
+                      ),
+                  
                #       radioButtons("RESTRICTION","Select Category", choices=c("All"="all","Regional"="region","Landlocked"="landlocked", "Small States"="small"), inline=T, selected="all"),
                            
                       fluidRow(

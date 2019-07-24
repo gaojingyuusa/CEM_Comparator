@@ -19,3 +19,8 @@ summary <- function(data, country, start, end, indicator){
 iso_code <- function(name){
   iso_name[iso_name$countryname==name,"iso3"]
 }
+
+# 3 function to convert ISO into country name
+name_code <- function(iso){
+  iso_name[iso_name$iso3==iso,"countryname"]
+}
