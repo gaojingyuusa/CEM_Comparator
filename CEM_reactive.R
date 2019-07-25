@@ -251,7 +251,7 @@ break_point_txt <- reactive({
   # Period
   end_period <- reactive({
     bg <- as.numeric(input$TT_ST)+3
-    c(bg:2018)
+    c(bg:2017)
   })
   
   # his period start = start

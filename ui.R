@@ -405,7 +405,7 @@ fluidPage(
                          h4("Total Period")
                          ),
                    column(3,
-                          selectInput("TT_ST","Start", choices=c(1980:2015), 2000)
+                          selectInput("TT_ST","Start", choices=c(1980:2014), 2000)
                          ),
                    column(3,
                           selectInput("TT_ED","End", choices=c(1980:2018), NULL)
@@ -426,7 +426,7 @@ fluidPage(
                  
                  fluidRow(
                    column(3,
-                          h4("Historical Period")
+                          h4("Recent Period")
                    ),
                    column(3,
                           selectInput("RS_ST",NULL, choices=c(1980:2018), NULL)
