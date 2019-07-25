@@ -400,7 +400,42 @@ fluidPage(
         tabPanel("CEM 2.0 Input",
                  
                  # Period selection
-                 selectInput("TT_ST","Start", choices=c(1980:2018), 2000),
+                 fluidRow(
+                   column(3,
+                         h4("Total Period")
+                         ),
+                   column(3,
+                          selectInput("TT_ST","Start", choices=c(1980:2015), 2000)
+                         ),
+                   column(3,
+                          selectInput("TT_ED","End", choices=c(1980:2018), NULL)
+                         )
+                         ),
+                 
+                 fluidRow(
+                   column(3,
+                          h4("Historical Period")
+                   ),
+                   column(3,
+                          textOutput("his_start")
+                   ),
+                   column(3,
+                          selectInput("HS_ED",NULL, choices=c(1980:2018), NULL)
+                   )
+                 ),
+                 
+                 fluidRow(
+                   column(3,
+                          h4("Historical Period")
+                   ),
+                   column(3,
+                          selectInput("RS_ST",NULL, choices=c(1980:2018), NULL)
+                   ),
+                   column(3,
+                          textOutput("recent_end")
+                   )
+                 ),
+             
                  
                  # List of comparators selected
                  

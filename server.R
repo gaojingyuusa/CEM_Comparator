@@ -212,6 +212,37 @@ shinyServer(function(input, output, session){
     })
     
   
+  
+    
+    
+  # Final period of time selection
+    
+    # End period
+    observe({
+      updateSelectInput(session, "TT_ED",
+                         choices=end_period())
+      })
+    # His start
+    output$his_start <- renderText({
+      his_start()
+    })
+    
+    observe({
+      updateSelectInput(session, "HS_ED",
+                        choices=his_end())
+    })
+    
+    # Recent end 
+    output$recent_end <- renderText({
+      recent_end()
+    })
+    
+    observe({
+      updateSelectInput(session, "RS_ST",
+                        choices= recent_start())
+    })
+    
+    
   # Final list
     output$final_list <- renderTable({
       final_list()

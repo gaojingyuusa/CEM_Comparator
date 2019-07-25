@@ -247,6 +247,37 @@ break_point_txt <- reactive({
 
 
 # 5 Final list of comparators
+
+  # Period
+  end_period <- reactive({
+    bg <- as.numeric(input$TT_ST)+3
+    c(bg:2018)
+  })
+  
+  # his period start = start
+  his_start <- reactive({
+    input$TT_ST
+  })
+  
+  his_end <- reactive({
+    start <- as.numeric(input$TT_ST)+1
+    end <- as.numeric(input$TT_ED)-1
+    c(start:end)
+  })
+  
+  # recent period end = end
+  recent_end <- reactive({
+    input$TT_ED
+  })
+  
+  recent_start <- reactive({
+    start <- as.numeric(input$HS_ED)+1
+    end <- as.numeric(input$TT_ED) -1
+    c(start:end)
+  })
+  
+  
+  
 final_list <- reactive({
   # Structural and Aspirational
   name <- c(iso_code(input$TARGET), iso_code(input$STRUT1),iso_code(input$STRUT2),iso_code(input$STRUT3),iso_code(input$ASPR1),iso_code(input$ASPR2),iso_code(input$ASPR3)) #%>% iso_code()
