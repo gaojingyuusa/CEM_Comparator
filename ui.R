@@ -3,6 +3,8 @@
 library(shiny)
 library(DT)
 library(plotly)
+library(tidyr)
+library(stringr)
 source("CEM_com_functions.R", local=F)
 source("CEM_selector_data.R", local=T)
 
@@ -268,7 +270,7 @@ fluidPage(
              #  h3("Find Aspiratio Comparators", style="color:#002244"),
     #         h3(textOutput("country.txt"), style="color:#009FDA"),
              #   p("Structural comparators are defined as countries that are similar to the target country in terms of selected indicators."),
-             h5(strong("STEP 4 Select Aspirational Indicator")),
+             h5(strong("STEP 4 Select Aspirational Indicator"),style="margin-bottom:10px"),
              # Title of indicator selections
              fluidRow(
                column(4,
@@ -321,16 +323,16 @@ fluidPage(
                
                # determine by rank or by value
                h4("  "),
-               h5(strong("STEP 5 Lower and Upper Bound")),
+               h5(strong("STEP 5 Lower and Upper Bound"),style="margin-bottom:0px"),
     
                # set the lower and upper bound numeric input
                fluidRow(
                
                column(2,  
-               h5("Lower Rank",style="color:#009FDA")
+               h5("Lower Rank",style="color:#009FDA;margin-bottom:0px")
                      ),
                column(2,
-               h5("Upper Rank",style="color:#009FDA")
+               h5("Upper Rank",style="color:#009FDA;margin-bottom:0px")
                      ),
                column(1,
                h4("")       
@@ -398,10 +400,10 @@ fluidPage(
                  ),
       
         tabPanel("CEM 2.0 Input",
-                 
+                 h4("Period of Analysis",style="color:#009FDA"),
                  # Period selection
                  fluidRow(
-                   column(3,
+                   column(2,
                          h4("Total Period")
                          ),
                    column(3,
@@ -413,11 +415,12 @@ fluidPage(
                          ),
                  
                  fluidRow(
-                   column(3,
+                   column(2,
                           h4("Historical Period")
                    ),
                    column(3,
-                          textOutput("his_start")
+                      #    selectInput("HS_ST",NULL, choices=(1980:2018), NULL)
+                          p(textOutput("his_start"),style="padding-left:50px")
                    ),
                    column(3,
                           selectInput("HS_ED",NULL, choices=c(1980:2018), NULL)
@@ -425,7 +428,7 @@ fluidPage(
                  ),
                  
                  fluidRow(
-                   column(3,
+                   column(2,
                           h4("Recent Period")
                    ),
                    column(3,
@@ -440,6 +443,8 @@ fluidPage(
                  # List of comparators selected
                  
                    # 3 Structural comparators
+                 h4(" "),
+                 h4("Final List of Comparators",style="color:#009FDA"),
                  fluidRow(
                  column(4,
                  selectInput("STRUT1","Structural Comparators",
@@ -459,14 +464,18 @@ fluidPage(
                              choices=unique(data_file$countryname),"Albania", multiple = F)
                  )
                  ),
-                 
+                 h4(" "),
                    # 3 Typology groups
-                 selectInput("TYPO1","Other Groups",
+                 fluidRow(
+                 column(4,
+                 selectInput("TYPO1","Other Group Comparators",
                              choices=unique(typology_list$option),"High income", multiple = F),
                  selectInput("TYPO2",NULL,
                              choices=unique(typology_list$option),"OECD", multiple = F),
                  selectInput("TYPO3",NULL,
-                             choices=unique(typology_list$option),"IBRD", multiple = F),
+                             choices=unique(typology_list$option),"IBRD", multiple = F)
+                       )
+                 ),
                  
                    # List table
                  tableOutput("normal_result")

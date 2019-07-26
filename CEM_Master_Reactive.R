@@ -8,7 +8,7 @@ basis_inv <- final_list()[1:7,]
 # Loop to retrieve and append individual comparator's data with new identifier
 normal_inv <- data.frame()
 for (i in seq_along(basis_inv$isocode)){
-  repl <- subset(normal_dt, ISO == basis_inv$isocode[i] & Year >=2005 & Year <= 2010) %>% 
+  repl <- subset(normal_dt, ISO == basis_inv$isocode[i] & Year >=input$TT_ST & Year <= input$TT_ED) %>% 
     mutate(identifier=paste0(basis_inv$isocode[i],"_",basis_inv$group[i])) %>% 
     select(-Source, -ISO) 
   normal_inv <- rbind(normal_inv,repl)
@@ -28,7 +28,7 @@ typ_cal <-function(test, start, end){
 normal_typ <- data.frame()
 basis_typ <- unique(final_list()$group[8:nrow(final_list())])
 for (j in basis_typ){
-  repl <- typ_cal(j, 2005, 2010)
+  repl <- typ_cal(j, input$TT_ST, input$TT_ED)
   normal_typ <- rbind(normal_typ, repl)
 }
 

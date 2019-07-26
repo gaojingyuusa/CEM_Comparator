@@ -2,6 +2,8 @@
 
 library(shiny)
 library(plotly)
+library(tidyr)
+library(stringr)
 # major server function
 shinyServer(function(input, output, session){
   source("CEM_reactive.R", local=T)
