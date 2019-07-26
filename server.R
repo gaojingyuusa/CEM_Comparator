@@ -248,6 +248,33 @@ shinyServer(function(input, output, session){
                         choices=strut2())
     })
     
+    observe({
+      updateSelectInput(session, "STRUT3",
+                        choices=strut3())
+    })
+    
+    observe({
+      updateSelectInput(session, "ASPR2",
+                        choices=aspr2())
+    })
+    
+    observe({
+      updateSelectInput(session, "ASPR3",
+                        choices=aspr3())
+    })
+    
+    observe({
+      updateSelectInput(session, "TYPO2",
+                        choices=typo2())
+    })
+    
+    observe({
+      updateSelectInput(session, "TYPO3",
+                        choices=typo3())
+    })
+    
+    
+    
   # Final list
     output$final_list <- renderTable({
       final_list()

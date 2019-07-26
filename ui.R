@@ -440,20 +440,25 @@ fluidPage(
                  # List of comparators selected
                  
                    # 3 Structural comparators
+                 fluidRow(
+                 column(4,
                  selectInput("STRUT1","Structural Comparators",
-                             choices=unique(data_file$countryname),"Algeria", multiple = F),
+                             choices=unique(data_file$countryname),"China", multiple = F),
                  selectInput("STRUT2",NULL,
                              choices=unique(data_file$countryname),"Albania", multiple = F),
                  selectInput("STRUT3",NULL,
-                             choices=unique(data_file$countryname),"Albania", multiple = F),
-                 
+                             choices=unique(data_file$countryname),"Albania", multiple = F)
+                 ),
                    # 3 Aspirational comparators
+                 column(4,
                  selectInput("ASPR1","Aspirational Comparators",
                              choices=unique(data_file$countryname),"Albania", multiple = F),
                  selectInput("ASPR2",NULL,
                              choices=unique(data_file$countryname),"Albania", multiple = F),
                  selectInput("ASPR3",NULL,
-                             choices=unique(data_file$countryname),"Albania", multiple = F),
+                             choices=unique(data_file$countryname),"Albania", multiple = F)
+                 )
+                 ),
                  
                    # 3 Typology groups
                  selectInput("TYPO1","Other Groups",

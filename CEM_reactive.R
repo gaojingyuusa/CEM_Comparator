@@ -208,7 +208,7 @@ aspr_result <- reactive({
   }
   aspr_list <- subset(struc_ranking(),iso3 %in% middle) %>% arrange(desc(-weighted_dif)) %>% slice(1:10) %>% select(iso3, countryname, weighted_dif)
   names(aspr_list) <- c("ISO", "Aspirational Comparators", "Weighted_Distance")
-  aspr_list
+  aspr_list %>% na.omit()
  # temp <- subset(struc_data(),iso3 %in% aspr_list$iso3)
  # merge(temp, aspr_list, by.x="iso3", by.y="iso3") %>% arrange(desc(-weighted_dif)) %>% select(-weighted_dif)
 })
@@ -216,7 +216,7 @@ aspr_result <- reactive({
 # 3.e aspirational comparators raw data table
 aspr_result_data <- reactive({
   temp <- subset(struc_data(),iso3 %in% aspr_result()$ISO)
-  result <- merge(temp, aspr_result(), by.x="iso3", by.y="ISO") %>% arrange(desc(-Weighted_Distance)) %>% select(-"Aspirational Comparators")
+  result <- merge(temp, aspr_result(), by.x="iso3", by.y="ISO") %>% arrange(desc(-Weighted_Distance)) %>% select(-"Aspirational Comparators") %>% na.omit()
   names(result)[1:2] <- c("ISO", "Aspirational Comparators")
   result
 })
@@ -310,15 +310,54 @@ final_list <- reactive({
     stringsAsFactors = F
   )
   
-  rbind(result, t1, t2, t3)
+  result <- rbind(result, t1, t2, t3)
+  names(result) <- c("isocode","group")
+  result
   
  # Typology
  # 
  
 })
 
-strut2 <- reactive({
-  remove <- input$STRUT1
-  result <- country[! country %in% remove] 
-  result 
+# Updated list of comparators conditional on the previous selection of user
+strut2 <- reactive({       # Target country shouldn't appear in comparator list at alol
+  remove <- c(input$STRUT1,input$TARGET)
+  medium <- unique(data_file$countryname)
+  result <- medium[! medium %in% remove] 
+  result
+})
+
+strut3 <- reactive({
+  remove <- c(input$STRUT1,input$STRUT2,input$TARGET)
+  medium <- unique(data_file$countryname)
+  result <- medium[! medium %in% remove] 
+  result
+})
+
+aspr2 <- reactive({
+  remove <- c(input$ASPR1,input$TARGET)
+  medium <- unique(data_file$countryname)
+  result <- medium[! medium %in% remove] 
+  result
+})
+
+aspr3 <- reactive({
+  remove <- c(input$ASPR1,input$ASPR2,input$TARGET)
+  medium <- unique(data_file$countryname)
+  result <- medium[! medium %in% remove] 
+  result
+})
+
+typo2 <- reactive({
+  remove <- input$TYPO1
+  medium <- unique(typology_list$option)
+  result <- medium[! medium %in% remove] 
+  result
+})
+
+typo3 <- reactive({
+  remove <- c(input$TYPO1,input$TYPO2)
+  medium <- unique(typology_list$option)
+  result <- medium[! medium %in% remove] 
+  result
 })
