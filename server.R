@@ -239,16 +239,21 @@ shinyServer(function(input, output, session){
     
     observe({
       updateSelectInput(session, "RS_ST",
-                        choices= recent_start())
+                        choices=his_end())
     })
-    
+  
+ # Selection panel of comparators update
+    observe({
+      updateSelectInput(session, "STRUT2",
+                        choices=strut2())
+    })
     
   # Final list
     output$final_list <- renderTable({
       final_list()
     })
     
-    
+  
     
   
 })

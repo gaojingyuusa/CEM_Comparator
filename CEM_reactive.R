@@ -316,3 +316,9 @@ final_list <- reactive({
  # 
  
 })
+
+strut2 <- reactive({
+  remove <- input$STRUT1
+  result <- country[! country %in% remove] 
+  result 
+})

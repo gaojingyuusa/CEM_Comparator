@@ -42,7 +42,7 @@ fluidPage(
                  img(src="wbg_efi.png", height = 50),
                  h3(strong("TARGET COUNTRY"),style="color:#002244"),
                  selectInput("TARGET","STEP 1 Select Target Country",
-                             choices=unique(data_file$countryname),"Albania", multiple = F),
+                             choices=country,"Albania", multiple = F),
                  h4(""),
                  sliderInput("YEAR","STEP 2 Select Period", min=1960, max=2018,value=c(2012,2017)),
                  h4(""),
@@ -441,7 +441,7 @@ fluidPage(
                  
                    # 3 Structural comparators
                  selectInput("STRUT1","Structural Comparators",
-                             choices=unique(data_file$countryname),"Albania", multiple = F),
+                             choices=unique(data_file$countryname),"Algeria", multiple = F),
                  selectInput("STRUT2",NULL,
                              choices=unique(data_file$countryname),"Albania", multiple = F),
                  selectInput("STRUT3",NULL,
