@@ -17,7 +17,7 @@ text.fun <- function(data){
 
 
 # WDI file: data_file contains all the indicator data needed for the structural and aspirational comparators
-data_file <- read.csv("cem_full.csv", header=T) %>% text.fun()
+data_file <- read.csv("cem_full_new.csv", header=T) %>% text.fun()
 names(data_file)[1] <- "iso3"
 # WBG classification file: class_file contains information such as which country belongs to which group defined by WBG like region and income level
 class_file <- read.csv("iso_class.csv", header=T) %>% text.fun()
@@ -41,28 +41,5 @@ typology_master <- read.csv("typology_master.csv", header=T)
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-summary <- aggregate(data_file, by = list(data_file$countryname), FUN=mean, na.rm=T) %>% subset(select=c("Group.1", "gdp","gdppc")) %>% mutate(add=1)
-#rank(-summary$gdp, na.last="keep") ,"gdpc","gdppc","gdppcc"
-
-summary[,2:ncol(summary)] <- sapply(summary[,2:ncol(summary)], function(x) rank(-x, na.last="keep"))
-#summary[summary$Group.1 == "China",2:3]
-#sweep(summary[,2:3], 2, c(1,2),"-")
-
-#summary[,!names(summary)=="Group.1"]
-
-test <- sapply(summary[,2:ncol(summary)], function(x) rank(-x, na.last="keep")) %>% as.matrix()
-chn <- summary[summary$Group.1 == "China",2:ncol(summary)] %>% as.matrix()
-summary[,2:ncol(summary)] <- sweep(test,2, chn,"-")
 
 
