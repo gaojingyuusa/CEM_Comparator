@@ -469,7 +469,7 @@ fluidPage(
                              choices=unique(typology_list$option),"IBRD", multiple = F),
                  
                    # List table
-                 tableOutput("final_list")
+                 tableOutput("normal_result")
                  
                  
         

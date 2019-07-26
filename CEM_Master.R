@@ -1,6 +1,7 @@
 
 # Deal with CEM Master file that contains everything needed for the tool
 library(tidyr)
+library(stringr)
 # Importing data from csv
 master_file <- read.csv("Micro_Master.csv")
 master_file$var <- NULL
@@ -69,5 +70,22 @@ for (j in basis_typ){
 }
 
 
- 
+## Append all data together
  full <- rbind(normal_inv, normal_typ) %>% spread(identifier, value)
+ ordername <- names(full)
+ full <- full[c("Indicator","Year",
+                ordername[grep("Target",ordername)],
+                ordername[grep("Stuc_1",ordername)],
+                ordername[grep("Stuc_2",ordername)],
+                ordername[grep("Stuc_3",ordername)],
+                ordername[grep("Aspr_1",ordername)],
+                ordername[grep("Aspr_2",ordername)],
+                ordername[grep("Aspr_3",ordername)],
+                ordername[grep(basis_typ[1],ordername)],
+                ordername[grep(basis_typ[2],ordername)],
+                ordername[grep(basis_typ[3],ordername)]
+                )]
+ 
+ 
+ 
+ 

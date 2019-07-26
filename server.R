@@ -280,7 +280,10 @@ shinyServer(function(input, output, session){
       final_list()
     })
     
-  
+  # Final normal table (to be appended to the abnormal data table)
+    output$normal_result <- renderTable({
+      normal_result()
+    })
     
   
 })
