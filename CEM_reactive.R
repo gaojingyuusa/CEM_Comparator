@@ -58,7 +58,9 @@ struc_match <- reactive({
     selected = c(indicator(input$INDICATOR1),indicator(input$INDICATOR2),indicator(input$INDICATOR3),indicator(input$INDICATOR4),indicator(input$INDICATOR5),indicator(input$INDICATOR6)),
     weight = c(input$W1,input$W2,input$W3,input$W4,input$W5,input$W6),
     stringsAsFactors = F
-  ) %>% subset(selected!="Select")
+  ) %>% subset(selected!="Select") %>% mutate(WDICode=wdi_ind(selected))
+ # data_source$WDICode <- wdi_ind(data_source$selected)
+ # data_source
 })
 
 
@@ -67,10 +69,13 @@ struc_ranking <- reactive({
   struc_rank <- struc_data() %>% mutate(add=1)
   struc_rank[,3:ncol(struc_rank)] <- sapply(struc_rank[,3:ncol(struc_rank)], function(x) rank(-x, na.last="keep")) 
   target <- struc_rank[struc_rank$countryname == input$TARGET,3:ncol(struc_rank)] %>% as.matrix()
+  
+  # calculate the difference of ranking between target country and all other countries in absolute value
   struc_rank[,3:ncol(struc_rank)] <- sweep(struc_rank[,3:ncol(struc_rank)],2, target,"-") %>% sapply(abs)
   #struc_rank <- struc_rank[,!names(struc_rank)=="add"]
   # inser the weight vector
   weight <- c(struc_match()[,"weight"],0)#%>% as.matrix()
+  # multiply with the vector of weights assigned to each indicator
   struc_rank[,3:ncol(struc_rank)] <- sweep(struc_rank[,3:ncol(struc_rank)],2, weight,"*")
   struc_rank$weighted_dif <- rowSums(struc_rank[,!names(struc_rank) %in% c("iso3","countryname")],na.rm=T)/sum(weight)
   struc_rank$na_percent <- apply(struc_rank,1, function(x) sum(is.na(x))/length(weight))
@@ -80,7 +85,14 @@ struc_ranking <- reactive({
   struc_rank 
 })
 
-# 2.c structural peers top 10
+# 2.c create table that contains the ranking of each country 
+struc_ranking_raw <- reactive({
+  struc_rank_raw <- struc_data() %>% mutate(add=1)
+  struc_rank_raw[,3:ncol(struc_rank_raw)] <- sapply(struc_rank_raw[,3:ncol(struc_rank_raw)], function(x) rank(-x, na.last="keep")) 
+  struc_rank_raw
+})
+
+# 2.d structural peers top 10
 struc_result <- reactive({
     full <- merge(class_file, struc_ranking(),by.x="Code", by.y="iso3")
   if(input$RESTRICTION=="all"){

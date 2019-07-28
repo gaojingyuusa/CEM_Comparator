@@ -4,6 +4,7 @@ library(shiny)
 library(plotly)
 library(tidyr)
 library(stringr)
+library(openxlsx)
 # major server function
 shinyServer(function(input, output, session){
   source("CEM_reactive.R", local=T)
@@ -78,6 +79,28 @@ shinyServer(function(input, output, session){
   output$struc_table <- renderTable({
     struc_data()
   })
+  
+  output$DOWNLOAD_STRUC <- downloadHandler(
+    filename = function() {
+      paste("download/",Sys.Date(), ".xlsx", sep = "")
+    },
+    content = function(file) {
+      wb <- createWorkbook()
+      addWorksheet(wb, sheetName="Value", gridLines = T)
+      addWorksheet(wb, sheetName="Global Rank", gridLine = T)
+      addWorksheet(wb, sheetName="Rank Differenced")
+      addWorksheet(wb, sheetName="Data Source")
+      writeData(wb, 1, x = struc_data())
+      writeData(wb, 2, x = struc_ranking_raw() %>% select(-add))
+      writeData(wb, 3, x = struc_ranking() %>% select(-add, -na_percent,-result))
+      writeData(wb, 4, x = struc_match() %>% select(-weight))
+  #    addWorksheet(wb, struc_data(),sheetName="Data 2", gridLines = F)
+      saveWorkbook(wb, file)
+
+  #    write.xlsx(struc_data(), file, row.names = FALSE, sheetName="People")
+    }
+  )
+  
     # Match indicator and weight
   output$str_matchind <- renderTable({
     struc_match()

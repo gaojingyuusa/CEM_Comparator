@@ -9,6 +9,10 @@ region <- function(target,group){
 indicator <- function(name){
   indicator_file[indicator_file$Description==name, "Name"]
 }
+  #2.1 function to find out the WDI indicator code
+wdi_ind <- function(code){
+  indicator_file[indicator_file$Name==code, "Code"]
+}
 
 # 3 function to calculate summary data of select country
 summary <- function(data, country, start, end, indicator){

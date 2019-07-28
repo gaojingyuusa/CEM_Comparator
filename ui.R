@@ -5,6 +5,8 @@ library(DT)
 library(plotly)
 library(tidyr)
 library(stringr)
+library(openxlsx)
+
 source("CEM_com_functions.R", local=F)
 source("CEM_selector_data.R", local=T)
 
@@ -250,7 +252,6 @@ fluidPage(
                                  )
                               ),
                
-               
                       p("Note: In descending order of similarity", style="color:grey")
             #          tableOutput("struc_rank"),
            #           tableOutput("struc_table"),
@@ -259,7 +260,21 @@ fluidPage(
                       tabPanel("Data", 
                       h4("      "),
                       p("Table below contains the actual value of structural indicators per structural comparators, which is the simply average of selected period of years.", style="color:grey"),
-                      tableOutput("struc_result_data")     
+                      
+                      
+                      # Download button
+                      fluidRow(
+                        column(4,
+                               downloadButton("DOWNLOAD_STRUC","Download Full Data (All Countries)", class="butt2",
+                                              tags$head(tags$style(".butt2{background-color:#009FDA;} .butt2{color: white;}")))
+                               )
+                        
+                      ),
+                      
+                      h4(" "),
+                      
+                      tableOutput("struc_result_data")
+             #         tableOutput("struc_table")
                       )
                       )
                           ),
