@@ -178,6 +178,7 @@ shinyServer(function(input, output, session){
     
     
     # Global maps of comparators
+     # Structural comparators
     output$struc_map <- renderPlotly({
    
       LAND_ISO <- struc_result()[,"ISO"]
@@ -212,6 +213,43 @@ shinyServer(function(input, output, session){
         ) %>% 
         layout(geo = g, showlegend = FALSE, hovermode = 'closest')
     })
+    
+     # Aspirational comparators
+    output$aspr_map <- renderPlotly({
+      
+      LAND_ISO <- aspr_result()[,"ISO"]
+      name <- aspr_result()[,"Aspirational Comparators"]
+      value <- rep(1, length(LAND_ISO))
+      
+      data <- data.frame(LAND_ISO, value, name, stringsAsFactors = F)
+      data[nrow(data) + 1,] = list(iso_code(input$TARGET),0, input$TARGET)
+      #   data$name <- name_code(data$LAND_ISO)
+      
+      # Run your code:
+      g <- list(
+        showframe = FALSE,
+        showland = TRUE,
+        landcolor = "#002244",
+        showcoastlines = FALSE,
+        projection = list(type = 'orthographic'),
+        resolution = '100',
+        showcountries = TRUE,
+        countrycolor = "white",
+        showocean = TRUE,
+        oceancolor = '#F2F2F2',
+        showlakes = TRUE,
+        lakecolor = '#DBDBDB'
+      )
+      
+      plot_geo(data) %>%
+        add_trace(
+          z = ~value, locations = ~LAND_ISO,
+          color = ~value, colors = c('#87FFF4','#009FDA'),
+          showscale=FALSE, text=~paste(data$name),hoverinfo="text", hoverlabel=list(bgcolor="white")
+        ) %>% 
+        layout(geo = g, showlegend = FALSE, hovermode = 'closest')
+    })
+    
     
   
   

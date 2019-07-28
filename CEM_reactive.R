@@ -206,7 +206,7 @@ aspr_result <- reactive({
   } else if (input$RANKVALUE=="value") {
     middle <- aspr_within_value()
   }
-  aspr_list <- subset(struc_ranking(),iso3 %in% middle) %>% arrange(desc(-weighted_dif)) %>% slice(1:10) %>% select(iso3, countryname, weighted_dif)
+  aspr_list <- subset(struc_ranking(),iso3 %in% middle) %>% arrange(desc(-weighted_dif)) %>% slice(1:input$ASPR_TOP) %>% select(iso3, countryname, weighted_dif)
   names(aspr_list) <- c("ISO", "Aspirational Comparators", "Weighted_Distance")
   aspr_list %>% na.omit()
  # temp <- subset(struc_data(),iso3 %in% aspr_list$iso3)

@@ -377,9 +377,22 @@ fluidPage(
                           h4("Aspirational Comparators: Top 10 Most Structurally Similar Countries Ahead",style="margin-top:20px;color:#009FDA"),
  #                         radioButtons("RANKVALUE","Select Category", choices=c("By Rank"="rank","By Value"="value"), inline=T, selected="rank"),
                         #  tableOutput("aspr_within_rank")
+              fluidRow(
+               column(3,
+                numericInput("ASPR_TOP","Number of Comparators", value=10, max=200)
+                     )
+                      ),
+                          
+              fluidRow(
+                column(5,
                           tableOutput("aspr_result"),
                           p("Note: In descending order of similarity", style="color:grey")
-             #             plotlyOutput("struc_map")
+                      ),
+                
+                column(6,
+                          plotlyOutput("aspr_map")
+                      )   
+                      )
                         ),
                 tabPanel("Data",
                          h4(" "),
