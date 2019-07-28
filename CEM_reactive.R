@@ -230,7 +230,16 @@ aspr_result_data <- reactive({
   temp <- subset(struc_data(),iso3 %in% aspr_result()$ISO)
   result <- merge(temp, aspr_result(), by.x="iso3", by.y="ISO") %>% arrange(desc(-Weighted_Distance)) %>% select(-"Aspirational Comparators") %>% na.omit()
   names(result)[1:2] <- c("ISO", "Aspirational Comparators")
+  result <- merge(aspr_data()[,2:3],result,by.x="iso3",by.y="ISO",all.y=T)
+  # reorder columns properly
+  part_1 <- names(result)[c(1,3)]
+  part_2 <- names(result)[2] 
+#  part_2 <- paste0("Aspirational",part_2_m)
+  part_3 <- names(result)[c(4:length(names(result)))]
+  result <- result[c(part_1, part_2, part_3)]
+  names(result)[3] <- paste0("aspirational_",gsub(".x","",part_2))
   result
+  
 })
 
 

@@ -80,6 +80,23 @@ shinyServer(function(input, output, session){
     struc_data()
   })
   
+  # download button for the list of comparators
+  output$DOWNLOAD_STRUC_LIST <- downloadHandler(
+    filename = function() {
+      paste("download/",Sys.Date(), ".xlsx", sep = "")
+    },
+    content = function(file) {
+      wb <- createWorkbook()
+      addWorksheet(wb, sheetName="List", gridLines = T)
+      writeData(wb, 1, x = struc_result())
+      #    addWorksheet(wb, struc_data(),sheetName="Data 2", gridLines = F)
+      saveWorkbook(wb, file)
+      
+      #    write.xlsx(struc_data(), file, row.names = FALSE, sheetName="People")
+    }
+  )
+  
+  # download button for full data in the "Data" tab
   output$DOWNLOAD_STRUC <- downloadHandler(
     filename = function() {
       paste("download/",Sys.Date(), ".xlsx", sep = "")
@@ -98,6 +115,21 @@ shinyServer(function(input, output, session){
       saveWorkbook(wb, file)
 
   #    write.xlsx(struc_data(), file, row.names = FALSE, sheetName="People")
+    }
+  )
+  
+  output$DOWNLOAD_STRUC_TOP <- downloadHandler(
+    filename = function() {
+      paste("download/",Sys.Date(), ".xlsx", sep = "")
+    },
+    content = function(file) {
+      wb <- createWorkbook()
+      addWorksheet(wb, sheetName="Data", gridLines = T)
+      writeData(wb, 1, x = struc_data() %>% subset(iso3 %in% struc_result()$ISO))
+      #    addWorksheet(wb, struc_data(),sheetName="Data 2", gridLines = F)
+      saveWorkbook(wb, file)
+      
+      #    write.xlsx(struc_data(), file, row.names = FALSE, sheetName="People")
     }
   )
   

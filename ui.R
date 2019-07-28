@@ -237,9 +237,14 @@ fluidPage(
                       
                       fluidRow(
                         column(3,
-                        numericInput("STRUC_TOP","Number of Comparators", value=10, max=200)
+                        numericInput("STRUC_TOP","Number of Comparators", value=10, max=200),
+                        p(" "),
+                        downloadButton("DOWNLOAD_STRUC_LIST","Download the List", class="butt1",
+                                       tags$head(tags$style(".butt1{background-color:#009FDA;color:white;}")))
                               )
                       ),
+                      
+                      h4(" "),
                   
                #       radioButtons("RESTRICTION","Select Category", choices=c("All"="all","Regional"="region","Landlocked"="landlocked", "Small States"="small"), inline=T, selected="all"),
                            
@@ -264,6 +269,10 @@ fluidPage(
                       
                       # Download button
                       fluidRow(
+                        column(3, style="margin:0px",
+                               downloadButton("DOWNLOAD_STRUC_TOP","Download Selected Data", class="butt1",
+                                              tags$head(tags$style(".butt1{background-color:#002244;} .butt1{color: white; }")))
+                               ),
                         column(4,
                                downloadButton("DOWNLOAD_STRUC","Download Full Data (All Countries)", class="butt2",
                                               tags$head(tags$style(".butt2{background-color:#009FDA;} .butt2{color: white;}")))
@@ -415,12 +424,12 @@ fluidPage(
                          tableOutput("aspr_result_data")
                         )
                 
-                 )
+                 ),
     
     
     
     
-             #  tableOutput("aspr_data")
+                 tableOutput("aspr_data")
     
     
     
