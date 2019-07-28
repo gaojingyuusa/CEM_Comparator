@@ -403,10 +403,13 @@ fluidPage(
                         #  tableOutput("aspr_within_rank")
               fluidRow(
                column(3,
-                numericInput("ASPR_TOP","Number of Comparators", value=10, max=200)
+                numericInput("ASPR_TOP","Number of Comparators", value=10, max=200),
+                p(" "),
+                downloadButton("DOWNLOAD_ASPR_LIST","Download the List", class="butt1",
+                               tags$head(tags$style(".butt1{background-color:#002244;} .butt1{color: white; }")))
                      )
                       ),
-                          
+                h4(" "),         
               fluidRow(
                 column(5,
                           tableOutput("aspr_result"),
@@ -428,7 +431,11 @@ fluidPage(
     
     
     
-    
+                 h4(" "),
+ 
+                 downloadButton("DOWNLOAD_ASPR_TOP","Download Selected Data", class="butt1",
+                          tags$head(tags$style(".butt1{background-color:#002244;} .butt1{color: white; }"))),
+ 
                  tableOutput("aspr_data")
     
     
