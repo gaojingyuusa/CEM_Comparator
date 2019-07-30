@@ -54,13 +54,13 @@ struc_data <- reactive({
 
 # 2.a match indicator and its weight
 struc_match <- reactive({
-  data.frame(
+  data_source <- data.frame(
     selected = c(indicator(input$INDICATOR1),indicator(input$INDICATOR2),indicator(input$INDICATOR3),indicator(input$INDICATOR4),indicator(input$INDICATOR5),indicator(input$INDICATOR6)),
     weight = c(input$W1,input$W2,input$W3,input$W4,input$W5,input$W6),
     stringsAsFactors = F
-  ) %>% subset(selected!="Select") %>% mutate(WDICode=wdi_ind(selected))
- # data_source$WDICode <- wdi_ind(data_source$selected)
- # data_source
+  ) %>% subset(selected!="Select") #%>% mutate(WDICode=wdi_ind(selected))
+ #data_source$WDICode <- wdi_ind(data_source$selected)
+ data_source
 })
 
 
@@ -238,6 +238,7 @@ aspr_result_data <- reactive({
   part_3 <- names(result)[c(4:length(names(result)))]
   result <- result[c(part_1, part_2, part_3)]
   names(result)[3] <- paste0("aspirational_",gsub(".x","",part_2))
+  names(result)[4] <- gsub(".y","",names(result)[4])
   result
   
 })

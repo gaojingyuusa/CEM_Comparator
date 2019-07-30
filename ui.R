@@ -424,19 +424,14 @@ fluidPage(
                 tabPanel("Data",
                          h4(" "),
                          p("Table below contains the actual value of structural indicators per structural comparators, which is the simply average of selected period of years. Listed countries are countries within selected range only.", style="color:grey"),
+                         
+                         downloadButton("DOWNLOAD_ASPR_TOP","Download Selected Data", class="butt1",
+                                        tags$head(tags$style(".butt1{background-color:#002244;} .butt1{color: white; }"))),
+                         h4(" "),
                          tableOutput("aspr_result_data")
                         )
                 
-                 ),
-    
-    
-    
-                 h4(" "),
- 
-                 downloadButton("DOWNLOAD_ASPR_TOP","Download Selected Data", class="butt1",
-                          tags$head(tags$style(".butt1{background-color:#002244;} .butt1{color: white; }"))),
- 
-                 tableOutput("aspr_data")
+                 )
     
     
     
@@ -447,7 +442,7 @@ fluidPage(
                  h4("Period of Analysis",style="color:#009FDA"),
                  # Period selection
                  fluidRow(
-                   column(2,
+                   column(3,
                          h4("Total Period")
                          ),
                    column(3,
@@ -459,7 +454,7 @@ fluidPage(
                          ),
                  
                  fluidRow(
-                   column(2,
+                   column(3,
                           h4("Historical Period")
                    ),
                    column(3,
@@ -472,7 +467,7 @@ fluidPage(
                  ),
                  
                  fluidRow(
-                   column(2,
+                   column(3,
                           h4("Recent Period")
                    ),
                    column(3,
