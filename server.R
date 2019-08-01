@@ -318,9 +318,15 @@ shinyServer(function(input, output, session){
                          choices=end_period())
       })
     # His start
-    output$his_start <- renderText({
-      his_start()
+   # output$his_start <- renderText({
+  #    his_start()
+  #  })
+    
+    observe({
+      updateSelectInput(session, "HS_ST",
+                        choices=his_start())
     })
+    
     
     observe({
       updateSelectInput(session, "HS_ED",
@@ -328,13 +334,18 @@ shinyServer(function(input, output, session){
     })
     
     # Recent end 
-    output$recent_end <- renderText({
-      recent_end()
-    })
+ #   output$recent_end <- renderText({
+ #     recent_end()
+ #   })
     
     observe({
       updateSelectInput(session, "RS_ST",
-                        choices=his_end())
+                        choices=recent_start())
+    })
+    
+    observe({
+      updateSelectInput(session, "RS_ED",
+                        choices=recent_end())
     })
   
  # Selection panel of comparators update

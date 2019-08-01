@@ -458,8 +458,8 @@ fluidPage(
                           h4("Historical Period")
                    ),
                    column(3,
-                      #    selectInput("HS_ST",NULL, choices=(1980:2018), NULL)
-                          p(textOutput("his_start"),style="padding-left:50px")
+                         selectInput("HS_ST",NULL, choices=(1980:2018), NULL)
+                        #  p(textOutput("his_start"),style="padding-left:50px")
                    ),
                    column(3,
                           selectInput("HS_ED",NULL, choices=c(1980:2018), NULL)
@@ -474,7 +474,8 @@ fluidPage(
                           selectInput("RS_ST",NULL, choices=c(1980:2018), NULL)
                    ),
                    column(3,
-                          textOutput("recent_end")
+                          selectInput("RS_ED",NULL, choices=c(1980:2018), NULL)
+                      #    textOutput("recent_end")
                    )
                  ),
              
