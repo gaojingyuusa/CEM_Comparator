@@ -10,7 +10,7 @@ master_file$value <- as.numeric(as.character(master_file$value))
 master_file$Year <- as.integer(master_file$Year)
 
 # Abnormal data filter
-src <- c("WMS","HCI","GSMA","BTI","EIU","DB","CPI","GFIN")
+src <- c("WMS","HCI","GSMA","BTI","EIU","DB","CPI","GFIN","BL")
 indc <- c("HK_5","HK_6","ICT_5",
           "ICT_6","ICT_7","ICT_8","ICT_9","ICT_13","ICT_10","ICT_11","ICT_12","INV_4",
           "INV_5","INV_6","INV_8",
@@ -19,6 +19,37 @@ indc <- c("HK_5","HK_6","ICT_5",
 
 # Normal data subset
 normal_dt <- subset(master_file, !(Source %in% src) & !(Indicator %in% indc))
+
+
+# Fixed year data subset: where indicators for a fixed year are needed
+
+fixed_dt <- subset(master_file, 
+                   # WMS = 2014
+                   (Source == "WMS" & Year == 2014)|
+                   (Source == "HCI" & Year == 2019)|
+                   (Source == "BL" & Year == 2010)|
+                   (Source == "EIU" & Year == 2018)|
+                   (Source == "GFIN" & Year == 2017)|
+                   (Indicator %in% c("HK_5","HK_6") & Year == 2017)
+                   )
+
+
+# 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
