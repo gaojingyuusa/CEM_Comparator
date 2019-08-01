@@ -34,7 +34,8 @@ fixed_dt <- subset(master_file,
                    )
 
 
-# 
+# End year data subset: where indicators for the end year selected are needed
+end_dt <- subset(master_file, Source %in% c("DB","CPI") | Indicator %in% c("FIN_58","FIN_59","FIN_60","FIN_61","FIN_62"))
 
 
 
