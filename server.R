@@ -5,6 +5,7 @@ library(plotly)
 library(tidyr)
 library(stringr)
 library(openxlsx)
+source("CEM_Master.R", local=T)
 # major server function
 shinyServer(function(input, output, session){
   source("CEM_reactive.R", local=T)

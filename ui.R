@@ -9,7 +9,7 @@ library(openxlsx)
 
 source("CEM_com_functions.R", local=F)
 source("CEM_selector_data.R", local=T)
-
+source("CEM_Master.R", local=T)
 fluidPage(
   
   # Style elements
@@ -509,11 +509,28 @@ fluidPage(
                  fluidRow(
                  column(4,
                  selectInput("TYPO1","Other Group Comparators",
-                             choices=unique(typology_list$option),"High income", multiple = F),
+                             choices=c(
+                             
+                             "High income",                     "Low income",                     "Lower middle income",             "Upper middle income",             "EAP, excluding high income",    
+                             "ECA, excluding high income",      "LAC, excluding high income",      "MNA, excluding high income",      "SAR, excluding high income",      "SSA, excluding high income",     
+                             "EAP, all",                       "ECA, all",                        "LAC, all",                        "MNA, all",                       "NAM, all",                       
+                             "SAR, all",                        "SSA, all",                        "BRICS",                           "OECD",                            "OPEC",                           
+                             "G20",                             "ASEAN",                           "Caribbean",                       "CIS",                             "ECOWAS",                         
+                             "Euro Union",                     "GCC",                             "Pacific Islands",                 "Blend",                           "IBRD",                           
+                             "IDA",                             "Advanced, IMF",                   "Emerging & Developing, IMF",      "Low Income Developing Countries", "Land-locked",                    
+                             "Small States",                    "Island States",                   "Fragile States",                  "EMU",                             "HIPC",                           
+                             "Non-HIPC",                        "Oil Exporter",                    "Oil Importer",                    "Commidity Exporting Countries" 
+                             ),
+                             
+                             "High income", multiple = F),
                  selectInput("TYPO2",NULL,
                              choices=unique(typology_list$option),"OECD", multiple = F),
                  selectInput("TYPO3",NULL,
                              choices=unique(typology_list$option),"IBRD", multiple = F)
+            
+            
+            
+            
                        )
                  ),
                  

@@ -38,6 +38,8 @@ iso_name <- unique(data_file[,c("iso3","countryname")])
 # Typology list: user end
 typology_list <- read.csv("typologylist.csv", header=T)
 
+only_list <- typology_list$option %>% as.character()
+
 # Typology master table
 typology_master <- read.csv("typology_master.csv", header=T)
 
